@@ -295,15 +295,15 @@
 ### T-16 — Middleware verifikasi
 - **Modul:** M1
 - **Prioritas:** High
-- **Status:** Todo
+- **Status:** Done
 - **Dependensi:** T-15
 - **Estimasi:** 1 jam
 - **File:** `app/Http/Middleware/EnsurePelangganVerified.php`, `app/Http/Middleware/EnsureMitraVerified.php`, `bootstrap/app.php`
 
-- [ ] `EnsurePelangganVerified` → 403 `{ "message": "Akun belum terverifikasi." }` jika status ≠ `Disetujui`
-- [ ] `EnsureMitraVerified` → sama untuk mitra
-- [ ] Daftarkan alias middleware
-- [ ] Test: akun `Menunggu` ditolak saat membuat permintaan / mengirim penawaran
+- [x] `EnsurePelangganVerified` → 403 `{ "message": "Akun belum terverifikasi." }` jika status ≠ `Disetujui`
+- [x] `EnsureMitraVerified` → sama untuk mitra
+- [x] Daftarkan alias middleware
+- [x] Test: akun `Menunggu` ditolak saat membuat permintaan / mengirim penawaran
 
 ### T-17 — Policy kepemilikan resource
 - **Modul:** M1

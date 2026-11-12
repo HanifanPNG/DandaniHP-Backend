@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\Auth\MitraAuthController;
 use App\Http\Controllers\Api\Auth\AdminAuthController;
 use App\Http\Controllers\Api\Admin\VerifikasiController;
 
+
 Route::get('/ping', function () {
     return response()->json(['message' => 'API is working!']);
 });
@@ -40,3 +41,4 @@ Route::middleware('auth:admin')->group(function () {
     Route::patch('/admin/pelanggan/{id}/verifikasi', [VerifikasiController::class, 'verifikasiPelanggan']);
     Route::patch('/admin/mitra/{id}/verifikasi', [VerifikasiController::class, 'verifikasiMitra']);
 });
+

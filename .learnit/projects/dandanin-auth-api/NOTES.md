@@ -16,7 +16,7 @@ memakai Laravel Sanctum, lalu membatasi akses dengan middleware dan policy.
 - [x] Registrasi pelanggan menyimpan status `Menunggu`
 - [x] Login pelanggan bisa via email atau nomor telepon
 - [x] Login mitra dan admin menghasilkan token terpisah
-- [ ] Middleware menolak akun yang belum terverifikasi
+- [x] Middleware menolak akun yang belum terverifikasi
 - [ ] Policy menolak akses ke resource milik pelanggan lain
 - [ ] Feature test untuk aturan di atas lulus
 
@@ -29,8 +29,10 @@ memakai Laravel Sanctum, lalu membatasi akses dengan middleware dan policy.
 - Register, login, me, logout mitra
 - Login admin (`/api/admin/auth/login`)
 - Verifikasi pelanggan & mitra oleh admin (BR-01)
+- Middleware `verified.pelanggan` / `verified.mitra` (403 untuk akun belum disetujui)
 - Uji HTTP manual: 9 skenario lulus
 - Uji verifikasi admin: 11 skenario lulus
+- Uji middleware verifikasi: 9 skenario lulus
 
 ## Konsep
 
