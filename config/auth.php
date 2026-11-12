@@ -39,6 +39,18 @@ return [
 
     'guards' => [
         'web' => [
+            'pelanggan'=> [
+                'driver' => 'sanctum',
+                'provider' => 'pelanggan',
+            ],
+            'mitra'=> [
+                'driver' => 'sanctum',
+                'provider' => 'mitra',
+            ],
+            'admin'=> [
+                'driver' => 'sanctum',
+                'provider' => 'admin',
+            ],
             'driver' => 'session',
             'provider' => 'users',
         ],
@@ -66,7 +78,18 @@ return [
             'driver' => 'eloquent',
             'model' => env('AUTH_MODEL', User::class),
         ],
-
+        'pelanggan' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Pelanggan::class,
+        ],
+        'mitra'=> [
+            'driver' => 'eloquent',
+            'model' => App\Models\MitraService::class,
+        ],
+        'admin'=> [
+            'driver' => 'eloquent',
+            'model' => App\Models\Administrator::class,
+        ],
         // 'users' => [
         //     'driver' => 'database',
         //     'table' => 'users',

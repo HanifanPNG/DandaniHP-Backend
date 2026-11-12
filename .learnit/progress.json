@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "current_project": "dandanin-auth-api",
+  "session": {
+    "status": "active",
+    "current_step": 0,
+    "waiting_for": "user_action"
+  },
+  "projects": [
+    {
+      "name": "dandanin-auth-api",
+      "status": "in_progress",
+      "level": "normal",
+      "steps_done": 0,
+      "concepts": {},
+      "struggles": [],
+      "challenge": {
+        "status": "pending"
+      },
+      "last_session": "2026-11-11"
+    }
+  ],
+  "total_projects_done": 0,
+  "level_overall": "beginner"
+}
