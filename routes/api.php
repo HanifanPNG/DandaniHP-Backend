@@ -42,3 +42,4 @@ Route::middleware('auth:admin')->group(function () {
     Route::patch('/admin/mitra/{id}/verifikasi', [VerifikasiController::class, 'verifikasiMitra']);
 });
 
+

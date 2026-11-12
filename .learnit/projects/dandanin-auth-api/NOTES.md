@@ -17,7 +17,7 @@ memakai Laravel Sanctum, lalu membatasi akses dengan middleware dan policy.
 - [x] Login pelanggan bisa via email atau nomor telepon
 - [x] Login mitra dan admin menghasilkan token terpisah
 - [x] Middleware menolak akun yang belum terverifikasi
-- [ ] Policy menolak akses ke resource milik pelanggan lain
+- [x] Policy menolak akses ke resource milik pelanggan lain
 - [ ] Feature test untuk aturan di atas lulus
 
 ## Yang Sudah Dilakukan
@@ -33,6 +33,7 @@ memakai Laravel Sanctum, lalu membatasi akses dengan middleware dan policy.
 - Uji HTTP manual: 9 skenario lulus
 - Uji verifikasi admin: 11 skenario lulus
 - Uji middleware verifikasi: 9 skenario lulus
+- Policy kepemilikan resource (5 policy) diterapkan dan diuji
 
 ## Konsep
 
@@ -48,7 +49,8 @@ memakai Laravel Sanctum, lalu membatasi akses dengan middleware dan policy.
 - middleware `auth:pelanggan` / `auth:mitra`
 - `createToken()` dan `currentAccessToken()->delete()`
 - route model binding manual (`findOrFail`)
-- validasi `in:` dan `required_if:`
+- Policy `view`, `update`, `delete` untuk 5 model
+- Gate::policy terdaftar di AppServiceProvider
 
 ### Needs Review
 - struktur array bersarang di `config/auth.php`

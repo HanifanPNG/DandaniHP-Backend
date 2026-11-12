@@ -308,15 +308,15 @@
 ### T-17 — Policy kepemilikan resource
 - **Modul:** M1
 - **Prioritas:** High
-- **Status:** Todo
+- **Status:** Done
 - **Dependensi:** T-16
 - **Estimasi:** 3 jam
 - **File:** `app/Policies/PermintaanPolicy.php`, `PenawaranPolicy.php`, `PesananPolicy.php`, `UlasanPolicy.php`, `NotifikasiPolicy.php`
 
-- [ ] Pelanggan hanya bisa akses permintaan/penawaran/pesanan/ulasan/notifikasi miliknya
-- [ ] Mitra hanya bisa akses pesanan di mana `id_mitra` miliknya
-- [ ] Admin tidak memakai policy ini (guard sendiri)
-- [ ] Test: akses resource pelanggan lain → 403
+- [x] Pelanggan hanya bisa akses permintaan/penawaran/pesanan/ulasan/notifikasi miliknya
+- [x] Mitra hanya bisa akses pesanan di mana `id_mitra` miliknya
+- [x] Admin tidak memakai policy ini (guard sendiri)
+- [x] Test: akses resource pelanggan lain → 403
 
 ---
 
