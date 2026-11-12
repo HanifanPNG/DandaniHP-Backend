@@ -385,12 +385,13 @@ Konvensi:
 | POST | `/api/auth/login` | publik | email **atau** nomor_telepon + kata sandi |
 | POST | `/api/auth/logout` | pelanggan | hapus token aktif |
 | GET | `/api/auth/me` | pelanggan | data + status verifikasi |
+| POST | `/api/mitra/auth/register` | publik | status awal `Menunggu` |
 | POST | `/api/mitra/auth/login` | publik | D2 |
 | POST | `/api/mitra/auth/logout` | mitra | |
 | GET | `/api/mitra/auth/me` | mitra | |
 | POST | `/api/admin/auth/login` | publik | pendukung BR-01 |
 | PATCH | `/api/admin/pelanggan/{id}/verifikasi` | admin | `Disetujui` / `Ditolak` + alasan |
-| PATCH | `/api/admin/mitra/{id}/verifikasi` | admin | `Disetujui` / `Ditolak` |
+| PATCH | `/api/admin/mitra/{id}/verifikasi` | admin | `Disetujui` / `Ditolak` (alasan tidak disimpan, kolom belum ada) |
 
 ### 3.2 Mitra (penemuan)
 

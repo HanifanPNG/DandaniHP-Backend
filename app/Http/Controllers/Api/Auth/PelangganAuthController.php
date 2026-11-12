@@ -50,4 +50,15 @@ class PelangganAuthController extends Controller
             'token' => $pelanggan->createToken('mobile')->plainTextToken
         ]);
     }
+
+    public function me(Request $request)
+    {
+        return response()->json(['data' => $request->user()]);
+    }
+
+    public function logout(Request $request)
+    {
+        $request->user()->currentAccessToken()->delete();
+        return response()->json(['message' => 'Logged out successfully']);
+    }
 }

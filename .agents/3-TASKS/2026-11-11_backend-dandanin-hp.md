@@ -190,106 +190,107 @@
 ### T-09 — Install Sanctum & aktifkan `routes/api.php`
 - **Modul:** M1
 - **Prioritas:** High
-- **Status:** Todo
+- **Status:** Done
 - **Dependensi:** T-08
 - **Estimasi:** 1 jam
 - **File:** `composer.json`, `bootstrap/app.php`, `routes/api.php`
 
-- [ ] `composer require laravel/sanctum`
-- [ ] Publish & jalankan migration `personal_access_tokens`
-- [ ] `bootstrap/app.php`: tambahkan `api: __DIR__.'/../routes/api.php'`
-- [ ] `routes/api.php` berisi grup `/api` kosong yang bisa diakses
-- [ ] `php artisan route:list` menampilkan route api
+- [x] `composer require laravel/sanctum`
+- [x] Publish & jalankan migration `personal_access_tokens`
+- [x] `bootstrap/app.php`: tambahkan `api: __DIR__.'/../routes/api.php'`
+- [x] `routes/api.php` berisi grup `/api` kosong yang bisa diakses
+- [x] `php artisan route:list` menampilkan route api
 
 ### T-10 — Guard & provider 3 aktor
 - **Modul:** M1
 - **Prioritas:** High
-- **Status:** Todo
+- **Status:** Done
 - **Dependensi:** T-09
 - **Estimasi:** 1 jam
 - **File:** `config/auth.php`
 
-- [ ] Provider `pelanggan` → `App\Models\Pelanggan`
-- [ ] Provider `mitra` → `App\Models\MitraService`
-- [ ] Provider `admin` → `App\Models\Administrator`
-- [ ] Guard `pelanggan`, `mitra`, `admin` dengan driver `sanctum`
-- [ ] Guard default tetap `web` (tidak mengganggu route `/`)
-- [ ] Uji `Auth::guard('mitra')->user()` mengembalikan model yang benar
+- [x] Provider `pelanggan` → `App\Models\Pelanggan`
+- [x] Provider `mitra` → `App\Models\MitraService`
+- [x] Provider `admin` → `App\Models\Administrator`
+- [x] Guard `pelanggan`, `mitra`, `admin` dengan driver `sanctum`
+- [x] Guard default tetap `web` (tidak mengganggu route `/`)
+- [x] Uji `Auth::guard('mitra')->user()` mengembalikan model yang benar
 
 ### T-11 — Trait token & bersihkan `User`
 - **Modul:** M1
 - **Prioritas:** High
-- **Status:** Todo
+- **Status:** Done
 - **Dependensi:** T-10
 - **Estimasi:** 1 jam
 - **File:** `app/Models/Pelanggan.php`, `app/Models/MitraService.php`, `app/Models/Administrator.php`, `app/Models/User.php`, `database/factories/UserFactory.php`
 
-- [ ] Tambah `HasApiTokens` di 3 model aktor
-- [ ] `Pelanggan` & `Administrator` sudah punya `getAuthPassword()`; pastikan `MitraService` juga
-- [ ] Hapus model `User` dan `UserFactory` jika tidak dirujuk test lain
-- [ ] Sesuaikan `config/auth.php` agar tidak lagi memakai `User::class`
-- [ ] `php artisan optimize:clear` tanpa error
+- [x] Tambah `HasApiTokens` di 3 model aktor
+- [x] `Pelanggan` & `Administrator` sudah punya `getAuthPassword()`; pastikan `MitraService` juga
+- [x] Hapus model `User` dan `UserFactory` jika tidak dirujuk test lain
+- [x] Sesuaikan `config/auth.php` agar tidak lagi memakai `User::class`
+- [x] `php artisan optimize:clear` tanpa error
 
 ### T-12 — Registrasi pelanggan
 - **Modul:** M1
 - **Prioritas:** High
-- **Status:** Todo
+- **Status:** Done
 - **Dependensi:** T-11
 - **Estimasi:** 3 jam
 - **File:** `app/Http/Controllers/Api/Auth/PelangganAuthController.php`, `app/Http/Requests/Auth/RegisterRequest.php`, `app/Http/Resources/PelangganResource.php`, `routes/api.php`
 
 **Endpoint:** `POST /api/auth/register`
 
-- [ ] Validasi: nama wajib, email format + unique, nomor telepon format wajar + unique, alamat wajib, kata sandi min 8 + `confirmed`, syarat & ketentuan wajib `accepted`
-- [ ] Simpan status `Menunggu`
-- [ ] Kembalikan token + data pelanggan (agar Flutter bisa membuka halaman verifikasi)
-- [ ] Password ter-hash (cast `hashed`)
-- [ ] Test: registrasi valid → 201; validasi gagal → 422 dengan pesan per field
+- [x] Validasi: nama wajib, email format + unique, nomor telepon format wajar + unique, alamat wajib, kata sandi min 8 + `confirmed`, syarat & ketentuan wajib `accepted`
+- [x] Simpan status `Menunggu`
+- [x] Kembalikan token + data pelanggan (agar Flutter bisa membuka halaman verifikasi)
+- [x] Password ter-hash (cast `hashed`)
+- [x] Test: registrasi valid → 201; validasi gagal → 422 dengan pesan per field
 
 ### T-13 — Login, logout, `me` pelanggan
 - **Modul:** M1
 - **Prioritas:** High
-- **Status:** Todo
+- **Status:** Done
 - **Dependensi:** T-12
 - **Estimasi:** 2 jam
 - **File:** `app/Http/Controllers/Api/Auth/PelangganAuthController.php`, `app/Http/Requests/Auth/LoginRequest.php`, `routes/api.php`
 
-- [ ] `POST /api/auth/login` menerima email **atau** nomor telepon + kata sandi
-- [ ] Password salah → 422/401 dengan pesan umum (tidak membocorkan akun ada/tidak)
-- [ ] `throttle:5,1` pada login
-- [ ] `POST /api/auth/logout` menghapus token aktif saja
-- [ ] `GET /api/auth/me` mengembalikan profil + `status_verifikasi` + `alasan_penolakan`
-- [ ] Test: login via telepon berhasil; login via email berhasil
+- [x] `POST /api/auth/login` menerima email **atau** nomor telepon + kata sandi
+- [x] Password salah → 422/401 dengan pesan umum (tidak membocorkan akun ada/tidak)
+- [x] `throttle:5,1` pada login
+- [x] `POST /api/auth/logout` menghapus token aktif saja
+- [x] `GET /api/auth/me` mengembalikan profil + `status_verifikasi` + `alasan_penolakan`
+- [x] Test: login via telepon berhasil; login via email berhasil
 
 ### T-14 — Auth mitra
 - **Modul:** M1
 - **Prioritas:** High
-- **Status:** Todo
+- **Status:** Done
 - **Dependensi:** T-13
 - **Estimasi:** 2 jam
 - **File:** `app/Http/Controllers/Api/Auth/MitraAuthController.php`, `routes/api.php`
 
-- [ ] `POST /api/mitra/auth/login` (email + kata sandi)
-- [ ] `POST /api/mitra/auth/logout`
-- [ ] `GET /api/mitra/auth/me` (termasuk `status_verifikasi`)
-- [ ] Login tetap boleh untuk mitra `Menunggu`, aksi dibatasi middleware
-- [ ] Test: token mitra tidak bisa memakai endpoint pelanggan
+- [x] `POST /api/mitra/auth/register` (status awal `Menunggu`)
+- [x] `POST /api/mitra/auth/login` (email + kata sandi)
+- [x] `POST /api/mitra/auth/logout`
+- [x] `GET /api/mitra/auth/me` (termasuk `status_verifikasi`)
+- [x] Login tetap boleh untuk mitra `Menunggu`, aksi dibatasi middleware
+- [x] Test: token mitra tidak bisa memakai endpoint pelanggan
 
 ### T-15 — Auth admin & verifikasi akun
 - **Modul:** M1
 - **Prioritas:** High
-- **Status:** Todo
+- **Status:** Done
 - **Dependensi:** T-14
 - **Estimasi:** 3 jam
 - **File:** `app/Http/Controllers/Api/Auth/AdminAuthController.php`, `app/Http/Controllers/Api/Admin/VerifikasiController.php`, `app/Http/Requests/Admin/VerifikasiRequest.php`, `routes/api.php`
 
 **Catatan:** minimal untuk menegakkan BR-01, bukan dashboard.
 
-- [ ] `POST /api/admin/auth/login`
-- [ ] `PATCH /api/admin/pelanggan/{id}/verifikasi` — nilai `Disetujui`/`Ditolak`
-- [ ] `PATCH /api/admin/mitra/{id}/verifikasi`
-- [ ] Jika `Ditolak`, `alasan_penolakan` wajib diisi
-- [ ] Test: pelanggan ditolak bisa melihat alasan lewat `/api/auth/me`
+- [x] `POST /api/admin/auth/login`
+- [x] `PATCH /api/admin/pelanggan/{id}/verifikasi` — nilai `Disetujui`/`Ditolak`
+- [x] `PATCH /api/admin/mitra/{id}/verifikasi`
+- [x] Jika `Ditolak`, `alasan_penolakan` wajib diisi
+- [x] Test: pelanggan ditolak bisa melihat alasan lewat `/api/auth/me`
 
 ### T-16 — Middleware verifikasi
 - **Modul:** M1

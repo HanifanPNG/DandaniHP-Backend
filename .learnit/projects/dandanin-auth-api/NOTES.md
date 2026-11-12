@@ -2,7 +2,7 @@
 
 ## Status
 
-In Progress
+In Progress (14 step selesai)
 
 ## Tujuan Project
 
@@ -11,18 +11,26 @@ memakai Laravel Sanctum, lalu membatasi akses dengan middleware dan policy.
 
 ## Definition of Done
 
-- [ ] Sanctum terpasang dan route `api` aktif
-- [ ] Guard & provider untuk pelanggan, mitra, admin
-- [ ] Registrasi pelanggan menyimpan status `Menunggu`
-- [ ] Login pelanggan bisa via email atau nomor telepon
-- [ ] Login mitra dan admin menghasilkan token terpisah
+- [x] Sanctum terpasang dan route `api` aktif
+- [x] Guard & provider untuk pelanggan, mitra, admin
+- [x] Registrasi pelanggan menyimpan status `Menunggu`
+- [x] Login pelanggan bisa via email atau nomor telepon
+- [x] Login mitra dan admin menghasilkan token terpisah
 - [ ] Middleware menolak akun yang belum terverifikasi
 - [ ] Policy menolak akses ke resource milik pelanggan lain
 - [ ] Feature test untuk aturan di atas lulus
 
 ## Yang Sudah Dilakukan
 
-- (belum ada)
+- Install Sanctum + aktifkan `routes/api.php`
+- Guard & provider: `pelanggan`, `mitra`, `admin`
+- Trait `HasApiTokens` di 3 model
+- Register, login, me, logout pelanggan
+- Register, login, me, logout mitra
+- Login admin (`/api/admin/auth/login`)
+- Verifikasi pelanggan & mitra oleh admin (BR-01)
+- Uji HTTP manual: 9 skenario lulus
+- Uji verifikasi admin: 11 skenario lulus
 
 ## Konsep
 
@@ -30,18 +38,27 @@ memakai Laravel Sanctum, lalu membatasi akses dengan middleware dan policy.
 - (belum ada)
 
 ### Understood
-- (belum ada)
+- mass assignment & kenapa status verifikasi tidak boleh dari client
 
 ### Used
-- (belum ada)
+- Sanctum token
+- guard & provider
+- middleware `auth:pelanggan` / `auth:mitra`
+- `createToken()` dan `currentAccessToken()->delete()`
+- route model binding manual (`findOrFail`)
+- validasi `in:` dan `required_if:`
 
 ### Needs Review
-- (belum ada)
+- struktur array bersarang di `config/auth.php`
 
 ## Kesulitan
 
-- (belum ada)
+- Guard tidak terdaftar karena kurung kurawal `web` terlalu bawah.
+- Nama tabel pada aturan `unique:` sempat salah (`mitra` vs `mitra_service`).
+- Variabel `$data` vs `$mitra` pada register mitra.
 
 ## Catatan Belajar
 
-- Mulai 2026-11-11, mode normal (satu action per giliran).
+- Status verifikasi selalu di-set server, tidak pernah dari request.
+- Satu tabel = satu model = satu provider = satu guard.
+- Token pelanggan ditolak di guard mitra (sudah diuji).

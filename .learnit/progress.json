@@ -3,7 +3,7 @@
   "current_project": "dandanin-auth-api",
   "session": {
     "status": "active",
-    "current_step": 0,
+    "current_step": 16,
     "waiting_for": "user_action"
   },
   "projects": [
@@ -11,13 +11,25 @@
       "name": "dandanin-auth-api",
       "status": "in_progress",
       "level": "normal",
-      "steps_done": 0,
-      "concepts": {},
-      "struggles": [],
+      "steps_done": 14,
+      "concepts": {
+        "sanctum": { "status": "used", "attempts": 1 },
+        "guard_provider": { "status": "used", "attempts": 1 },
+        "token": { "status": "used", "attempts": 2 },
+        "middleware_auth": { "status": "used", "attempts": 1 },
+        "mass_assignment": { "status": "understood", "attempts": 1 }
+      },
+      "struggles": [
+        {
+          "concept": "config_structure",
+          "attempts": 1,
+          "hints_used": 1
+        }
+      ],
       "challenge": {
         "status": "pending"
       },
-      "last_session": "2026-11-11"
+      "last_session": "2026-11-12"
     }
   ],
   "total_projects_done": 0,

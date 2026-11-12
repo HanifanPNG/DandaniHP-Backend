@@ -39,21 +39,21 @@ return [
 
     'guards' => [
         'web' => [
-            'pelanggan'=> [
-                'driver' => 'sanctum',
-                'provider' => 'pelanggan',
-            ],
-            'mitra'=> [
-                'driver' => 'sanctum',
-                'provider' => 'mitra',
-            ],
-            'admin'=> [
-                'driver' => 'sanctum',
-                'provider' => 'admin',
-            ],
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'pelanggan'=> [
+                'driver' => 'sanctum',
+                'provider' => 'pelanggan',
+        ],
+            'mitra'=> [
+                'driver' => 'sanctum',
+                'provider' => 'mitra',
+        ],
+            'admin'=> [
+                'driver' => 'sanctum',
+                'provider' => 'admin',
+         ],
     ],
 
     /*
