@@ -34,6 +34,7 @@ memakai Laravel Sanctum, lalu membatasi akses dengan middleware dan policy.
 - Uji verifikasi admin: 11 skenario lulus
 - Uji middleware verifikasi: 9 skenario lulus
 - Policy kepemilikan resource (5 policy) diterapkan dan diuji
+- `GET /api/mitra` (daftar mitra + filter q/layanan/rating_min/buka, sort rating & jarak, paginasi)
 
 ## Konsep
 
@@ -51,6 +52,8 @@ memakai Laravel Sanctum, lalu membatasi akses dengan middleware dan policy.
 - route model binding manual (`findOrFail`)
 - Policy `view`, `update`, `delete` untuk 5 model
 - Gate::policy terdaftar di AppServiceProvider
+- Eloquent query builder: `when`, `whereHas`, `withCount`, `with`, `paginate`
+- Haversine via `selectRaw` untuk sort jarak
 
 ### Needs Review
 - struktur array bersarang di `config/auth.php`

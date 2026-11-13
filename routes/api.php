@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\Auth\PelangganAuthController;
 use App\Http\Controllers\Api\Auth\MitraAuthController;
 use App\Http\Controllers\Api\Auth\AdminAuthController;
 use App\Http\Controllers\Api\Admin\VerifikasiController;
+use App\Http\Controllers\Api\Mitra\MitraDiscoveryController;
 
 
 Route::get('/ping', function () {
@@ -42,4 +43,4 @@ Route::middleware('auth:admin')->group(function () {
     Route::patch('/admin/mitra/{id}/verifikasi', [VerifikasiController::class, 'verifikasiMitra']);
 });
 
-
+Route::middleware('auth:pelanggan')->get('/mitra', [MitraDiscoveryController::class, 'index']);

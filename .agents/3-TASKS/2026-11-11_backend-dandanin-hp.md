@@ -325,19 +325,19 @@
 ### T-18 — Daftar mitra + filter
 - **Modul:** M2
 - **Prioritas:** High
-- **Status:** Todo
+- **Status:** Done
 - **Dependensi:** T-17
 - **Estimasi:** 3 jam
 - **File:** `app/Http/Controllers/Api/Mitra/MitraDiscoveryController.php`, `app/Http/Resources/MitraResource.php`, `routes/api.php`
 
 **Endpoint:** `GET /api/mitra`
 
-- [ ] Hanya mitra `Disetujui` yang tampil
-- [ ] Filter `q` (nama usaha / alamat / nama layanan)
-- [ ] Filter `layanan`, `rating_min`, `buka`
-- [ ] Sort `rekomendasi` (rating desc), `rating`, `jarak` (dari lat/long bila ada)
-- [ ] Paginasi + `with('layanan')` (hindari N+1)
-- [ ] Response memuat: nama, badge verified, rating, `review_count`, alamat, jam operasional, `is_open`, layanan utama, `foto_toko`
+- [x] Hanya mitra `Disetujui` yang tampil
+- [x] Filter `q` (nama usaha / alamat / nama layanan)
+- [x] Filter `layanan`, `rating_min`, `buka`
+- [x] Sort `rekomendasi` (rating desc), `rating`, `jarak` (dari lat/long bila ada)
+- [x] Paginasi + `with('layanan')` (hindari N+1)
+- [x] Response memuat: nama, badge verified, rating, `review_count`, alamat, jam operasional, `is_open`, layanan utama, `foto_toko`
 
 ### T-19 — Detail mitra
 - **Modul:** M2
