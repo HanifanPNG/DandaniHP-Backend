@@ -377,32 +377,32 @@
 ### T-21 — Generator `kode_pesanan`
 - **Modul:** M3
 - **Prioritas:** High
-- **Status:** Todo
+- **Status:** Done
 - **Dependensi:** T-08
 - **Estimasi:** 2 jam
 - **File:** `app/Services/KodePesananGenerator.php`
 
-- [ ] Format `SRV-{YYYY}-{5 digit urut}` (contoh `SRV-2026-00125`)
-- [ ] Unik; retry maksimal 3x bila bentrok
-- [ ] Dipanggil di dalam transaksi pembuatan permintaan
-- [ ] Unit test: 2 permintaan berurutan menghasilkan kode berbeda
+- [x] Format `SRV-{YYYY}-{5 digit urut}` (contoh `SRV-2026-00125`)
+- [x] Unik; retry maksimal 3x bila bentrok
+- [x] Dipanggil di dalam transaksi pembuatan permintaan
+- [x] Unit test: 2 permintaan berurutan menghasilkan kode berbeda
 
 ### T-22 — Buat permintaan service
 - **Modul:** M3
 - **Prioritas:** High
-- **Status:** Todo
+- **Status:** Done
 - **Dependensi:** T-21, T-17
 - **Estimasi:** 3 jam
 - **File:** `app/Http/Controllers/Api/Pelanggan/PermintaanController.php`, `app/Http/Requests/Pelanggan/StorePermintaanRequest.php`, `routes/api.php`
 
 **Endpoint:** `POST /api/permintaan` (middleware verifikasi)
 
-- [ ] Validasi: merek, model, kategori, deskripsi wajib; `lama_kerusakan`, `kondisi_hp`, `catatan_tambahan` opsional
-- [ ] Status awal `Mencari Penawaran`
-- [ ] `kode_pesanan` dari T-21
-- [ ] `id_pelanggan` dari token, **bukan** dari body
-- [ ] Response memuat `kode_pesanan` + id
-- [ ] Test: akun belum verifikasi → 403 (BR-01)
+- [x] Validasi: merek, model, kategori, deskripsi wajib; `lama_kerusakan`, `kondisi_hp`, `catatan_tambahan` opsional
+- [x] Status awal `Mencari Penawaran`
+- [x] `kode_pesanan` dari T-21
+- [x] `id_pelanggan` dari token, **bukan** dari body
+- [x] Response memuat `kode_pesanan` + id
+- [x] Test: akun belum verifikasi → 403 (BR-01)
 
 ### T-23 — Upload lampiran permintaan
 - **Modul:** M3

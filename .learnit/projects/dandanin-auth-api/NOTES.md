@@ -2,7 +2,7 @@
 
 ## Status
 
-In Progress (14 step selesai)
+In Progress (22 step selesai)
 
 ## Tujuan Project
 
@@ -38,6 +38,8 @@ memakai Laravel Sanctum, lalu membatasi akses dengan middleware dan policy.
 - `GET /api/mitra/{id}` (detail + galeri + 3 ulasan terbaru)
 - `GET /api/mitra/{id}/ulasan` (daftar ulasan, paginasi)
 - Zona waktu `Asia/Jakarta` (BR-12) & `is_open` dihitung di model
+- `POST /api/permintaan` (kode pesanan otomatis, pemilik dari token, BR-01)
+- Unit test generator + feature test endpoint permintaan (7 test lulus)
 
 ## Konsep
 
@@ -57,7 +59,10 @@ memakai Laravel Sanctum, lalu membatasi akses dengan middleware dan policy.
 - Gate::policy terdaftar di AppServiceProvider
 - Eloquent query builder: `when`, `whereHas`, `withCount`, `with`, `paginate`
 - Haversine via `selectRaw` untuk sort jarak
-- Api Resource: `MitraResource`, `MitraDetailResource`, `UlasanResource`
+- Api Resource: `MitraResource`, `MitraDetailResource`, `UlasanResource`, `PermintaanResource`
+- Form Request untuk validasi terpisah dari controller
+- Service class (`KodePesananGenerator`) + transaksi database
+- Feature/Unit test dengan `RefreshDatabase`
 
 ### Needs Review
 - struktur array bersarang di `config/auth.php`
