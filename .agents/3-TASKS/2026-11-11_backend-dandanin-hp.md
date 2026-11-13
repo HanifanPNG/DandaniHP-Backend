@@ -342,33 +342,33 @@
 ### T-19 — Detail mitra
 - **Modul:** M2
 - **Prioritas:** High
-- **Status:** Todo
+- **Status:** Done
 - **Dependensi:** T-18
 - **Estimasi:** 2 jam
 - **File:** controller & resource yang sama, `routes/api.php`
 
 **Endpoint:** `GET /api/mitra/{id}`
 
-- [ ] Identitas + status verifikasi
-- [ ] Deskripsi usaha, alamat, nomor telepon, jam operasional
-- [ ] Daftar layanan + galeri
-- [ ] Rating, jumlah ulasan, ulasan terbaru (maks 3)
-- [ ] `is_open` dihitung dari `jam_buka`/`jam_tutup` + waktu `Asia/Jakarta`
-- [ ] 404 jika mitra tidak ada / belum `Disetujui`
+- [x] Identitas + status verifikasi
+- [x] Deskripsi usaha, alamat, nomor telepon, jam operasional
+- [x] Daftar layanan + galeri
+- [x] Rating, jumlah ulasan, ulasan terbaru (maks 3)
+- [x] `is_open` dihitung dari `jam_buka`/`jam_tutup` + waktu `Asia/Jakarta`
+- [x] 404 jika mitra tidak ada / belum `Disetujui`
 
 ### T-20 — Ulasan mitra
 - **Modul:** M2
 - **Prioritas:** Mid
-- **Status:** Todo
+- **Status:** Done
 - **Dependensi:** T-19
 - **Estimasi:** 1 jam
 - **File:** controller & resource, `routes/api.php`
 
 **Endpoint:** `GET /api/mitra/{id}/ulasan`
 
-- [ ] Paginasi, urut terbaru
-- [ ] Hanya menampilkan nama pelanggan (tanpa email/telepon)
-- [ ] Menampilkan rating, komentar, waktu
+- [x] Paginasi, urut terbaru
+- [x] Hanya menampilkan nama pelanggan (tanpa email/telepon)
+- [x] Menampilkan rating, komentar, waktu
 
 ---
 

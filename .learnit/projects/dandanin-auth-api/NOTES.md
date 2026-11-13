@@ -35,6 +35,9 @@ memakai Laravel Sanctum, lalu membatasi akses dengan middleware dan policy.
 - Uji middleware verifikasi: 9 skenario lulus
 - Policy kepemilikan resource (5 policy) diterapkan dan diuji
 - `GET /api/mitra` (daftar mitra + filter q/layanan/rating_min/buka, sort rating & jarak, paginasi)
+- `GET /api/mitra/{id}` (detail + galeri + 3 ulasan terbaru)
+- `GET /api/mitra/{id}/ulasan` (daftar ulasan, paginasi)
+- Zona waktu `Asia/Jakarta` (BR-12) & `is_open` dihitung di model
 
 ## Konsep
 
@@ -54,6 +57,7 @@ memakai Laravel Sanctum, lalu membatasi akses dengan middleware dan policy.
 - Gate::policy terdaftar di AppServiceProvider
 - Eloquent query builder: `when`, `whereHas`, `withCount`, `with`, `paginate`
 - Haversine via `selectRaw` untuk sort jarak
+- Api Resource: `MitraResource`, `MitraDetailResource`, `UlasanResource`
 
 ### Needs Review
 - struktur array bersarang di `config/auth.php`
