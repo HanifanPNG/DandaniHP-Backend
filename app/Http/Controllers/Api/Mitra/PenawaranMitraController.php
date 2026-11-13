@@ -5,9 +5,9 @@ namespace App\Http\Controllers\Api\Mitra;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Mitra\StorePenawaranRequest;
 use App\Http\Resources\PenawaranResource;
-use App\Models\Notifikasi;
 use App\Models\PenawaranMitra;
 use App\Models\PermintaanService;
+use App\Services\NotifikasiService;
 use App\Support\StatusPesanan;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
@@ -55,15 +55,15 @@ class PenawaranMitraController extends Controller
                 ]);
 
                 // Pelanggan diberi tahu ada penawaran masuk.
-                Notifikasi::create([
-                    'id_pelanggan' => $permintaan->id_pelanggan,
-                    'tipe'         => 'Penawaran',
-                    'judul'        => 'Penawaran baru',
-                    'pesan'        => 'Mitra '.$mitra->nama_usaha.' mengirim penawaran untuk '
+                $notifikasiService = app(NotifikasiService::class);
+                $notifikasiService->kirimKePelanggan(
+                    $permintaan->pelanggan,
+                    'Penawaran',
+                    'Penawaran baru',
+                    'Mitra '.$mitra->nama_usaha.' mengirim penawaran untuk '
                         .$permintaan->kode_pesanan.'.',
-                    'id_pesanan'   => null,
-                    'waktu_dibuat' => now(),
-                ]);
+                    null
+                );
 
                 return $penawaran;
             });

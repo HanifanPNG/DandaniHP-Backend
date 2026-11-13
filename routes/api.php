@@ -15,6 +15,7 @@ use App\Http\Controllers\Api\Mitra\PenawaranMitraController;
 use App\Http\Controllers\Api\Mitra\PesananMitraController;
 use App\Http\Controllers\Api\Mitra\PembayaranMitraController;
 use App\Http\Controllers\Api\Pelanggan\UlasanController;
+use App\Http\Controllers\Api\Pelanggan\NotifikasiController;
 
 
 Route::get('/ping', function () {
@@ -90,6 +91,14 @@ Route::middleware(['auth:pelanggan', 'verified.pelanggan'])->group(function () {
     Route::post('/permintaan', [PermintaanController::class, 'store']);
     Route::post('/pesanan/{id}/ulasan', [UlasanController::class, 'store'])
         ->whereNumber('id');
+});
+
+// Notifikasi pelanggan.
+Route::middleware(['auth:pelanggan', 'verified.pelanggan'])->group(function () {
+    Route::get('/notifikasi', [NotifikasiController::class, 'index']);
+    Route::post('/notifikasi/{id}/baca', [NotifikasiController::class, 'baca'])
+        ->whereNumber('id');
+    Route::post('/notifikasi/baca-semua', [NotifikasiController::class, 'bacaSemua']);
 });
 
 // Aksi mitra terverifikasi.

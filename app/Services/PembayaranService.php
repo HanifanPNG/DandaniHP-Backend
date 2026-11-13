@@ -2,9 +2,9 @@
 
 namespace App\Services;
 
-use App\Models\Notifikasi;
 use App\Models\PembayaranTunai;
 use App\Models\PesananAktif;
+use App\Services\NotifikasiService;
 use App\Support\StatusPesanan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
@@ -75,14 +75,14 @@ class PembayaranService
             ]);
 
             // Notifikasi ke pelanggan.
-            Notifikasi::create([
-                'id_pelanggan' => $pesanan->id_pelanggan,
-                'tipe'         => 'Pembayaran',
-                'judul'        => 'Pembayaran diterima',
-                'pesan'        => 'Pembayaran tunai sejumlah Rp'.number_format((int) $harga, 0, ',', '.').' untuk pesanan '.$pesanan->permintaan?->kode_pesanan.' telah dikonfirmasi.',
-                'id_pesanan'   => $pesanan->id_pesanan,
-                'waktu_dibuat' => now(),
-            ]);
+            $notifikasiService = app(NotifikasiService::class);
+            $notifikasiService->kirimKePelanggan(
+                $pesanan->pelanggan,
+                'Pembayaran',
+                'Pembayaran diterima',
+                'Pembayaran tunai sejumlah Rp'.number_format((int) $harga, 0, ',', '.').' untuk pesanan '.$pesanan->permintaan?->kode_pesanan.' telah dikonfirmasi.',
+                $pesanan->id_pesanan
+            );
 
             return $pesanan->load([
                 'permintaan',
