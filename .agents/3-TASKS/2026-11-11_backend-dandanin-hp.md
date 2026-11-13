@@ -472,22 +472,22 @@
 ### T-27 — Setujui penawaran (transaksi)
 - **Modul:** M4
 - **Prioritas:** High
-- **Status:** Todo
+- **Status:** Done
 - **Dependensi:** T-26
 - **Estimasi:** 4 jam
 - **File:** `app/Services/PenawaranService.php`, controller, `routes/api.php`
 
 **Endpoint:** `POST /api/penawaran/{id}/setujui`
 
-- [ ] Semua langkah di dalam `DB::transaction` + `lockForUpdate`
-- [ ] Validasi: pemilik, penawaran `Menunggu Keputusan`, permintaan belum punya pesanan
-- [ ] Penawaran terpilih → `Disetujui`
-- [ ] Penawaran lain pada permintaan sama → `Kedaluwarsa`
-- [ ] Buat `pesanan_aktif` status `Masuk Antrean`; FK diturunkan dari penawaran
-- [ ] Permintaan → `Selesai Dilelang`
-- [ ] Tulis `riwayat_status_pesanan` (aktor `Sistem`)
-- [ ] Test: penawaran lain otomatis `Kedaluwarsa`; approve kedua kali ditolak
-- [ ] Test: race dua approve bersamaan hanya menghasilkan 1 pesanan (unique constraint)
+- [x] Semua langkah di dalam `DB::transaction` + `lockForUpdate`
+- [x] Validasi: pemilik, penawaran `Menunggu Keputusan`, permintaan belum punya pesanan
+- [x] Penawaran terpilih → `Disetujui`
+- [x] Penawaran lain pada permintaan sama → `Kedaluwarsa`
+- [x] Buat `pesanan_aktif` status `Masuk Antrean`; FK diturunkan dari penawaran
+- [x] Permintaan → `Selesai Dilelang`
+- [x] Tulis `riwayat_status_pesanan` (aktor `Sistem`)
+- [x] Test: penawaran lain otomatis `Kedaluwarsa`; approve kedua kali ditolak
+- [x] Test: race dua approve bersamaan hanya menghasilkan 1 pesanan (unique constraint)
 
 ### T-28 — Tolak penawaran
 - **Modul:** M4

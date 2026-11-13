@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Api\Pelanggan;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\PenawaranResource;
+use App\Http\Resources\PesananResource;
 use App\Models\MitraService;
 use App\Models\PenawaranMitra;
 use App\Models\PermintaanService;
+use App\Services\PenawaranService;
 use App\Support\StatusPesanan;
 use Illuminate\Http\Request;
 
@@ -44,5 +46,25 @@ class PenawaranController extends Controller
         $penawaran = $query->orderBy('id_penawaran')->get();
 
         return PenawaranResource::collection($penawaran);
+    }
+
+    // POST /api/penawaran/{id}/setujui
+    //
+    // Pelanggan memilih satu pemenang. Semua perubahan status dan
+    // pembuatan pesanan dilakukan PenawaranService dalam satu transaksi.
+    public function setujui(int $id, PenawaranService $service)
+    {
+        $penawaran = PenawaranMitra::with('permintaan')->findOrFail($id);
+
+        // Hanya pemilik permintaan induk yang boleh menyetujui.
+        $this->authorize('update', $penawaran);
+
+        $pesanan = $service->setujui($penawaran);
+
+        // 201 Created: pesanan baru ikut terbuat.
+        return response()->json([
+            'message' => 'Penawaran disetujui. Pesanan masuk antrean mitra.',
+            'data'    => (new PesananResource($pesanan))->resolve(),
+        ], 201);
     }
 }

@@ -60,6 +60,10 @@ Route::middleware('auth:pelanggan')->group(function () {
     // Daftar penawaran untuk satu permintaan (pemilik saja).
     Route::get('/permintaan/{id}/penawaran', [PenawaranController::class, 'index'])
         ->whereNumber('id');
+
+    // Menyetujui penawaran -> membuat pesanan aktif (BR-04).
+    Route::post('/penawaran/{id}/setujui', [PenawaranController::class, 'setujui'])
+        ->whereNumber('id');
 });
 
 // Aksi pelanggan yang butuh akun terverifikasi (BR-01).
