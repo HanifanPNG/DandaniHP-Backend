@@ -526,65 +526,65 @@
 ### T-30 — Detail pesanan + timeline
 - **Modul:** M5
 - **Prioritas:** High
-- **Status:** Todo
+- **Status:** Done
 - **Dependensi:** T-29, T-27
 - **Estimasi:** 3 jam
 - **File:** `app/Http/Controllers/Api/Pelanggan/PesananController.php`, `PesananResource.php`, `routes/api.php`
 
 **Endpoint:** `GET /api/pesanan/{id}`
 
-- [ ] Hanya pemilik atau mitra terkait (Policy)
-- [ ] `status_kanonik` + label
-- [ ] Timeline dari `riwayat_status_pesanan` (urut waktu, termasuk aktor & catatan)
-- [ ] Data HP, kerusakan, mitra + kontak
-- [ ] Harga disetujui dari penawaran, `estimasi_selesai` = `waktu_dibuat` + `estimasi_hari`
-- [ ] Info pembayaran tunai: jumlah, status, waktu konfirmasi (tanpa tombol konfirmasi)
-- [ ] Eager load semua relasi, tanpa N+1
+- [x] Hanya pemilik atau mitra terkait (Policy)
+- [x] `status_kanonik` + label
+- [x] Timeline dari `riwayat_status_pesanan` (urut waktu, termasuk aktor & catatan)
+- [x] Data HP, kerusakan, mitra + kontak
+- [x] Harga disetujui dari penawaran, `estimasi_selesai` = `waktu_dibuat` + `estimasi_hari`
+- [x] Info pembayaran tunai: jumlah, status, waktu konfirmasi (tanpa tombol konfirmasi)
+- [x] Eager load semua relasi, tanpa N+1
 
 ### T-31 — Daftar pesanan aktif
 - **Modul:** M5
 - **Prioritas:** Mid
-- **Status:** Todo
+- **Status:** Done
 - **Dependensi:** T-30
 - **Estimasi:** 1 jam
 - **File:** controller, `routes/api.php`
 
 **Endpoint:** `GET /api/pesanan`
 
-- [ ] Hanya pesanan milik pelanggan dengan status belum `Pesanan Selesai`
-- [ ] Urut `waktu_update_terakhir` desc
-- [ ] Response ringkas untuk kartu beranda
+- [x] Hanya pesanan milik pelanggan dengan status belum `Pesanan Selesai`
+- [x] Urut `waktu_update_terakhir` desc
+- [x] Response ringkas untuk kartu beranda
 
 ### T-32 — Riwayat service
 - **Modul:** M5
 - **Prioritas:** High
-- **Status:** Todo
+- **Status:** Done
 - **Dependensi:** T-31
 - **Estimasi:** 2 jam
 - **File:** `app/Http/Controllers/Api/Pelanggan/RiwayatController.php`, `routes/api.php`
 
 **Endpoint:** `GET /api/riwayat?filter=`
 
-- [ ] Filter `semua`, `berlangsung`, `selesai`, `ditolak`, `dibatalkan` sesuai PRD
-- [ ] `rejected` = permintaan tanpa pesanan & semua penawaran ditolak
-- [ ] Item memuat kode pesanan, mitra, tipe HP, tanggal, biaya, badge status
-- [ ] Paginasi + empty state ditangani Flutter (API cukup mengembalikan array kosong)
-- [ ] Test tiap filter
+- [x] Filter `semua`, `berlangsung`, `selesai`, `ditolak`, `dibatalkan` sesuai PRD
+- [x] `rejected` = permintaan tanpa pesanan & semua penawaran ditolak
+- [x] Item memuat kode pesanan, mitra, tipe HP, tanggal, biaya, badge status
+- [x] Paginasi + empty state ditangani Flutter (API cukup mengembalikan array kosong)
+- [x] Test tiap filter
 
 ### T-33 — Detail riwayat
 - **Modul:** M5
 - **Prioritas:** Mid
-- **Status:** Todo
+- **Status:** Done
 - **Dependensi:** T-32
 - **Estimasi:** 1 jam
 - **File:** controller, resource, `routes/api.php`
 
 **Endpoint:** `GET /api/riwayat/{id}`
 
-- [ ] Read-only, hanya pemilik
-- [ ] Seluruh perubahan status + status pembayaran + tanggal selesai
-- [ ] Menyertakan ulasan bila ada
-- [ ] Flag `bisa_ulasan` = status `Pesanan Selesai` && belum ada ulasan
+- [x] Read-only, hanya pemilik
+- [x] Seluruh perubahan status + status pembayaran + tanggal selesai
+- [x] Menyertakan ulasan bila ada
+- [x] Flag `bisa_ulasan` = status `Pesanan Selesai` && belum ada ulasan
 
 ---
 

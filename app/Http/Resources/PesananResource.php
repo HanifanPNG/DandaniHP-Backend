@@ -21,6 +21,14 @@ class PesananResource extends JsonResource
                 fn () => $this->permintaan?->kode_pesanan
             ),
 
+            // "Samsung A54" untuk kartu daftar pesanan.
+            'tipe_hp' => $this->whenLoaded(
+                'permintaan',
+                fn () => trim(
+                    ($this->permintaan?->merek_hp ?? '').' '.($this->permintaan?->model_hp ?? '')
+                )
+            ),
+
             'mitra' => $this->whenLoaded('mitra', fn () => [
                 'id_mitra'   => $this->mitra?->id_mitra,
                 'nama_usaha' => $this->mitra?->nama_usaha,
@@ -31,6 +39,18 @@ class PesananResource extends JsonResource
                 'penawaran',
                 fn () => (int) $this->penawaran?->harga_penawaran
             ),
+
+            // Estimasi selesai dihitung dari waktu pesanan + estimasi_hari.
+            'estimasi_selesai' => $this->whenLoaded('penawaran', function () {
+                if ($this->waktu_dibuat === null || $this->penawaran?->estimasi_hari === null) {
+                    return null;
+                }
+
+                return $this->waktu_dibuat
+                    ->copy()
+                    ->addDays((int) $this->penawaran->estimasi_hari)
+                    ->toIso8601String();
+            }),
 
             'status_pengerjaan' => $this->status_pengerjaan,
             'status_kanonik'    => $kanonik,

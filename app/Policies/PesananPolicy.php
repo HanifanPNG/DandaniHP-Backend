@@ -3,38 +3,36 @@
 namespace App\Policies;
 
 use App\Models\MitraService;
-use App\Models\PesananAktif;
 use App\Models\Pelanggan;
-use Illuminate\Auth\Access\Response;
+use App\Models\PesananAktif;
 
 class PesananPolicy
 {
     /**
      * Determine whether the user can view any models.
      */
-    public function viewAny(Pelanggan $user): bool
+    public function viewAny(Pelanggan|MitraService $user): bool
     {
         return false;
     }
 
     /**
-     * Determine whether the user can view the model.
+     * Pesanan boleh dilihat oleh pelanggan pemilik atau mitra
+     * yang mengerjakannya.
      */
-    public function view(Pelanggan $user, PesananAktif $pesanan): bool
+    public function view(Pelanggan|MitraService $user, PesananAktif $pesanan): bool
     {
         if ($user instanceof Pelanggan) {
             return $pesanan->id_pelanggan === $user->id_pelanggan;
         }
-        if ($user instanceof MitraService) {
-            return $pesanan->id_mitra === $user->id_mitra;
-        }
-        return false;
+
+        return $pesanan->id_mitra === $user->id_mitra;
     }
 
     /**
      * Determine whether the user can create models.
      */
-    public function create(Pelanggan $user): bool
+    public function create(Pelanggan|MitraService $user): bool
     {
         return false;
     }
@@ -42,7 +40,7 @@ class PesananPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(Pelanggan $user, PesananAktif $pesananAktif): bool
+    public function update(Pelanggan|MitraService $user, PesananAktif $pesananAktif): bool
     {
         return false;
     }
@@ -50,7 +48,7 @@ class PesananPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(Pelanggan $user, PesananAktif $pesananAktif): bool
+    public function delete(Pelanggan|MitraService $user, PesananAktif $pesananAktif): bool
     {
         return false;
     }
@@ -58,7 +56,7 @@ class PesananPolicy
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(Pelanggan $user, PesananAktif $pesananAktif): bool
+    public function restore(Pelanggan|MitraService $user, PesananAktif $pesananAktif): bool
     {
         return false;
     }
@@ -66,7 +64,7 @@ class PesananPolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(Pelanggan $user, PesananAktif $pesananAktif): bool
+    public function forceDelete(Pelanggan|MitraService $user, PesananAktif $pesananAktif): bool
     {
         return false;
     }

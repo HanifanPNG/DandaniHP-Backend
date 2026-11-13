@@ -2,7 +2,7 @@
 
 ## Status
 
-In Progress (28 step selesai)
+In Progress (33 step selesai)
 
 ## Tujuan Project
 
@@ -45,7 +45,11 @@ memakai Laravel Sanctum, lalu membatasi akses dengan middleware dan policy.
 - `GET /api/permintaan/{id}/penawaran` (sort harga/rating, sembunyikan `Kedaluwarsa`)
 - `POST /api/penawaran/{id}/setujui` (transaksi: pemenang, kedaluwarsa, pesanan, riwayat, notifikasi)
 - `POST /api/penawaran/{id}/tolak` (BR-05: tanpa pesanan; semua ditolak → `rejected`)
-- Unit test generator/status kanonik + feature test permintaan & penawaran (50 test lulus)
+- `GET /api/pesanan` (pesanan aktif, urut update terbaru)
+- `GET /api/pesanan/{id}` (detail + timeline + kontak mitra + estimasi selesai + pembayaran)
+- `GET /api/riwayat?filter=` (semua/berlangsung/selesai/ditolak/dibatalkan, paginasi)
+- `GET /api/riwayat/{id}` (read-only + timeline + pembayaran + ulasan + `bisa_ulasan`)
+- Unit test generator/status kanonik + feature test permintaan, penawaran, pesanan & riwayat (73 test lulus)
 
 ## Konsep
 
