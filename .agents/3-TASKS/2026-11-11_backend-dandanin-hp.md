@@ -574,17 +574,17 @@
 ### T-33 — Detail riwayat
 - **Modul:** M5
 - **Prioritas:** Mid
-- **Status:** Todo
+- **Status:** Done
 - **Dependensi:** T-32
 - **Estimasi:** 1 jam
 - **File:** controller, resource, `routes/api.php`
 
 **Endpoint:** `GET /api/riwayat/{id}`
 
-- [ ] Read-only, hanya pemilik
-- [ ] Seluruh perubahan status + status pembayaran + tanggal selesai
-- [ ] Menyertakan ulasan bila ada
-- [ ] Flag `bisa_ulasan` = status `Pesanan Selesai` && belum ada ulasan
+- [x] Read-only, hanya pemilik
+- [x] Seluruh perubahan status + status pembayaran + tanggal selesai
+- [x] Menyertakan ulasan bila ada
+- [x] Flag `bisa_ulasan` = status `Pesanan Selesai` && belum ada ulasan
 
 ---
 

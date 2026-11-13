@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Pelanggan;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\RiwayatDetailResource;
 use App\Http\Resources\RiwayatResource;
 use App\Models\PermintaanService;
 use App\Support\StatusPesanan;
@@ -75,5 +76,24 @@ class RiwayatController extends Controller
             ->paginate(10);
 
         return RiwayatResource::collection($riwayat);
+    }
+
+    // GET /api/riwayat/{id}
+    //
+    // Detail read-only milik pelanggan sendiri (id = id_permintaan).
+    public function show(int $id)
+    {
+        $permintaan = PermintaanService::with([
+            'penawaran',
+            'pesanan.mitra',
+            'pesanan.penawaran',
+            'pesanan.pembayaran',
+            'pesanan.riwayat',
+            'pesanan.ulasan',
+        ])->findOrFail($id);
+
+        $this->authorize('view', $permintaan);
+
+        return new RiwayatDetailResource($permintaan);
     }
 }
