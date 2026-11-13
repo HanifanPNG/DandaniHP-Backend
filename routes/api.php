@@ -48,6 +48,9 @@ Route::middleware('auth:pelanggan')->group(function () {
     Route::get('/mitra', [MitraDiscoveryController::class, 'index']);
     Route::get('/mitra/{id}', [MitraDiscoveryController::class, 'show'])->whereNumber('id');
     Route::get('/mitra/{id}/ulasan', [MitraDiscoveryController::class, 'ulasan'])->whereNumber('id');
+
+    // Detail permintaan: pemilik saja (dicek Policy).
+    Route::get('/permintaan/{id}', [PermintaanController::class, 'show'])->whereNumber('id');
 });
 
 // Aksi pelanggan yang butuh akun terverifikasi (BR-01).

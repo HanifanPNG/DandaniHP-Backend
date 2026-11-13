@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Pelanggan;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Pelanggan\StorePermintaanRequest;
+use App\Http\Resources\PermintaanDetailResource;
 use App\Http\Resources\PermintaanResource;
 use App\Models\PermintaanService;
 use App\Services\KodePesananGenerator;
@@ -72,5 +73,26 @@ class PermintaanController extends Controller
         return (new PermintaanResource($permintaan))
             ->response()
             ->setStatusCode(201);
+    }
+
+    // GET /api/permintaan/{id}
+    //
+    // Detail satu permintaan. Hanya pemilik yang boleh melihat
+    // (dicek lewat PermintaanPolicy::view).
+    public function show(int $id)
+    {
+        // Relasi dimuat sekaligus supaya tidak ada query berulang (N+1).
+        $permintaan = PermintaanService::with([
+            'lampiran',
+            // Penawaran + data mitra yang dipakai di kartu penawaran.
+            'penawaran.mitra:id_mitra,nama_usaha,rating_rata_rata',
+            // Pesanan dipakai helper status kanonik.
+            'pesanan',
+        ])->findOrFail($id);
+
+        // 403 kalau bukan pemilik, 404 sudah ditangani findOrFail.
+        $this->authorize('view', $permintaan);
+
+        return new PermintaanDetailResource($permintaan);
     }
 }
