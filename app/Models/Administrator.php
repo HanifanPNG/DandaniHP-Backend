@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Laravel\Sanctum\HasApiTokens;
 
 class Administrator extends Authenticatable
-{
+{   
+    use HasApiTokens;
+    
     protected $table = 'administrator';
     protected $primaryKey = 'id_admin';
     public $timestamps = false;

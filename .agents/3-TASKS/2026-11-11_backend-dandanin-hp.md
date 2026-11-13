@@ -190,132 +190,133 @@
 ### T-09 — Install Sanctum & aktifkan `routes/api.php`
 - **Modul:** M1
 - **Prioritas:** High
-- **Status:** Todo
+- **Status:** Done
 - **Dependensi:** T-08
 - **Estimasi:** 1 jam
 - **File:** `composer.json`, `bootstrap/app.php`, `routes/api.php`
 
-- [ ] `composer require laravel/sanctum`
-- [ ] Publish & jalankan migration `personal_access_tokens`
-- [ ] `bootstrap/app.php`: tambahkan `api: __DIR__.'/../routes/api.php'`
-- [ ] `routes/api.php` berisi grup `/api` kosong yang bisa diakses
-- [ ] `php artisan route:list` menampilkan route api
+- [x] `composer require laravel/sanctum`
+- [x] Publish & jalankan migration `personal_access_tokens`
+- [x] `bootstrap/app.php`: tambahkan `api: __DIR__.'/../routes/api.php'`
+- [x] `routes/api.php` berisi grup `/api` kosong yang bisa diakses
+- [x] `php artisan route:list` menampilkan route api
 
 ### T-10 — Guard & provider 3 aktor
 - **Modul:** M1
 - **Prioritas:** High
-- **Status:** Todo
+- **Status:** Done
 - **Dependensi:** T-09
 - **Estimasi:** 1 jam
 - **File:** `config/auth.php`
 
-- [ ] Provider `pelanggan` → `App\Models\Pelanggan`
-- [ ] Provider `mitra` → `App\Models\MitraService`
-- [ ] Provider `admin` → `App\Models\Administrator`
-- [ ] Guard `pelanggan`, `mitra`, `admin` dengan driver `sanctum`
-- [ ] Guard default tetap `web` (tidak mengganggu route `/`)
-- [ ] Uji `Auth::guard('mitra')->user()` mengembalikan model yang benar
+- [x] Provider `pelanggan` → `App\Models\Pelanggan`
+- [x] Provider `mitra` → `App\Models\MitraService`
+- [x] Provider `admin` → `App\Models\Administrator`
+- [x] Guard `pelanggan`, `mitra`, `admin` dengan driver `sanctum`
+- [x] Guard default tetap `web` (tidak mengganggu route `/`)
+- [x] Uji `Auth::guard('mitra')->user()` mengembalikan model yang benar
 
 ### T-11 — Trait token & bersihkan `User`
 - **Modul:** M1
 - **Prioritas:** High
-- **Status:** Todo
+- **Status:** Done
 - **Dependensi:** T-10
 - **Estimasi:** 1 jam
 - **File:** `app/Models/Pelanggan.php`, `app/Models/MitraService.php`, `app/Models/Administrator.php`, `app/Models/User.php`, `database/factories/UserFactory.php`
 
-- [ ] Tambah `HasApiTokens` di 3 model aktor
-- [ ] `Pelanggan` & `Administrator` sudah punya `getAuthPassword()`; pastikan `MitraService` juga
-- [ ] Hapus model `User` dan `UserFactory` jika tidak dirujuk test lain
-- [ ] Sesuaikan `config/auth.php` agar tidak lagi memakai `User::class`
-- [ ] `php artisan optimize:clear` tanpa error
+- [x] Tambah `HasApiTokens` di 3 model aktor
+- [x] `Pelanggan` & `Administrator` sudah punya `getAuthPassword()`; pastikan `MitraService` juga
+- [x] Hapus model `User` dan `UserFactory` jika tidak dirujuk test lain
+- [x] Sesuaikan `config/auth.php` agar tidak lagi memakai `User::class`
+- [x] `php artisan optimize:clear` tanpa error
 
 ### T-12 — Registrasi pelanggan
 - **Modul:** M1
 - **Prioritas:** High
-- **Status:** Todo
+- **Status:** Done
 - **Dependensi:** T-11
 - **Estimasi:** 3 jam
 - **File:** `app/Http/Controllers/Api/Auth/PelangganAuthController.php`, `app/Http/Requests/Auth/RegisterRequest.php`, `app/Http/Resources/PelangganResource.php`, `routes/api.php`
 
 **Endpoint:** `POST /api/auth/register`
 
-- [ ] Validasi: nama wajib, email format + unique, nomor telepon format wajar + unique, alamat wajib, kata sandi min 8 + `confirmed`, syarat & ketentuan wajib `accepted`
-- [ ] Simpan status `Menunggu`
-- [ ] Kembalikan token + data pelanggan (agar Flutter bisa membuka halaman verifikasi)
-- [ ] Password ter-hash (cast `hashed`)
-- [ ] Test: registrasi valid → 201; validasi gagal → 422 dengan pesan per field
+- [x] Validasi: nama wajib, email format + unique, nomor telepon format wajar + unique, alamat wajib, kata sandi min 8 + `confirmed`, syarat & ketentuan wajib `accepted`
+- [x] Simpan status `Menunggu`
+- [x] Kembalikan token + data pelanggan (agar Flutter bisa membuka halaman verifikasi)
+- [x] Password ter-hash (cast `hashed`)
+- [x] Test: registrasi valid → 201; validasi gagal → 422 dengan pesan per field
 
 ### T-13 — Login, logout, `me` pelanggan
 - **Modul:** M1
 - **Prioritas:** High
-- **Status:** Todo
+- **Status:** Done
 - **Dependensi:** T-12
 - **Estimasi:** 2 jam
 - **File:** `app/Http/Controllers/Api/Auth/PelangganAuthController.php`, `app/Http/Requests/Auth/LoginRequest.php`, `routes/api.php`
 
-- [ ] `POST /api/auth/login` menerima email **atau** nomor telepon + kata sandi
-- [ ] Password salah → 422/401 dengan pesan umum (tidak membocorkan akun ada/tidak)
-- [ ] `throttle:5,1` pada login
-- [ ] `POST /api/auth/logout` menghapus token aktif saja
-- [ ] `GET /api/auth/me` mengembalikan profil + `status_verifikasi` + `alasan_penolakan`
-- [ ] Test: login via telepon berhasil; login via email berhasil
+- [x] `POST /api/auth/login` menerima email **atau** nomor telepon + kata sandi
+- [x] Password salah → 422/401 dengan pesan umum (tidak membocorkan akun ada/tidak)
+- [x] `throttle:5,1` pada login
+- [x] `POST /api/auth/logout` menghapus token aktif saja
+- [x] `GET /api/auth/me` mengembalikan profil + `status_verifikasi` + `alasan_penolakan`
+- [x] Test: login via telepon berhasil; login via email berhasil
 
 ### T-14 — Auth mitra
 - **Modul:** M1
 - **Prioritas:** High
-- **Status:** Todo
+- **Status:** Done
 - **Dependensi:** T-13
 - **Estimasi:** 2 jam
 - **File:** `app/Http/Controllers/Api/Auth/MitraAuthController.php`, `routes/api.php`
 
-- [ ] `POST /api/mitra/auth/login` (email + kata sandi)
-- [ ] `POST /api/mitra/auth/logout`
-- [ ] `GET /api/mitra/auth/me` (termasuk `status_verifikasi`)
-- [ ] Login tetap boleh untuk mitra `Menunggu`, aksi dibatasi middleware
-- [ ] Test: token mitra tidak bisa memakai endpoint pelanggan
+- [x] `POST /api/mitra/auth/register` (status awal `Menunggu`)
+- [x] `POST /api/mitra/auth/login` (email + kata sandi)
+- [x] `POST /api/mitra/auth/logout`
+- [x] `GET /api/mitra/auth/me` (termasuk `status_verifikasi`)
+- [x] Login tetap boleh untuk mitra `Menunggu`, aksi dibatasi middleware
+- [x] Test: token mitra tidak bisa memakai endpoint pelanggan
 
 ### T-15 — Auth admin & verifikasi akun
 - **Modul:** M1
 - **Prioritas:** High
-- **Status:** Todo
+- **Status:** Done
 - **Dependensi:** T-14
 - **Estimasi:** 3 jam
 - **File:** `app/Http/Controllers/Api/Auth/AdminAuthController.php`, `app/Http/Controllers/Api/Admin/VerifikasiController.php`, `app/Http/Requests/Admin/VerifikasiRequest.php`, `routes/api.php`
 
 **Catatan:** minimal untuk menegakkan BR-01, bukan dashboard.
 
-- [ ] `POST /api/admin/auth/login`
-- [ ] `PATCH /api/admin/pelanggan/{id}/verifikasi` — nilai `Disetujui`/`Ditolak`
-- [ ] `PATCH /api/admin/mitra/{id}/verifikasi`
-- [ ] Jika `Ditolak`, `alasan_penolakan` wajib diisi
-- [ ] Test: pelanggan ditolak bisa melihat alasan lewat `/api/auth/me`
+- [x] `POST /api/admin/auth/login`
+- [x] `PATCH /api/admin/pelanggan/{id}/verifikasi` — nilai `Disetujui`/`Ditolak`
+- [x] `PATCH /api/admin/mitra/{id}/verifikasi`
+- [x] Jika `Ditolak`, `alasan_penolakan` wajib diisi
+- [x] Test: pelanggan ditolak bisa melihat alasan lewat `/api/auth/me`
 
 ### T-16 — Middleware verifikasi
 - **Modul:** M1
 - **Prioritas:** High
-- **Status:** Todo
+- **Status:** Done
 - **Dependensi:** T-15
 - **Estimasi:** 1 jam
 - **File:** `app/Http/Middleware/EnsurePelangganVerified.php`, `app/Http/Middleware/EnsureMitraVerified.php`, `bootstrap/app.php`
 
-- [ ] `EnsurePelangganVerified` → 403 `{ "message": "Akun belum terverifikasi." }` jika status ≠ `Disetujui`
-- [ ] `EnsureMitraVerified` → sama untuk mitra
-- [ ] Daftarkan alias middleware
-- [ ] Test: akun `Menunggu` ditolak saat membuat permintaan / mengirim penawaran
+- [x] `EnsurePelangganVerified` → 403 `{ "message": "Akun belum terverifikasi." }` jika status ≠ `Disetujui`
+- [x] `EnsureMitraVerified` → sama untuk mitra
+- [x] Daftarkan alias middleware
+- [x] Test: akun `Menunggu` ditolak saat membuat permintaan / mengirim penawaran
 
 ### T-17 — Policy kepemilikan resource
 - **Modul:** M1
 - **Prioritas:** High
-- **Status:** Todo
+- **Status:** Done
 - **Dependensi:** T-16
 - **Estimasi:** 3 jam
 - **File:** `app/Policies/PermintaanPolicy.php`, `PenawaranPolicy.php`, `PesananPolicy.php`, `UlasanPolicy.php`, `NotifikasiPolicy.php`
 
-- [ ] Pelanggan hanya bisa akses permintaan/penawaran/pesanan/ulasan/notifikasi miliknya
-- [ ] Mitra hanya bisa akses pesanan di mana `id_mitra` miliknya
-- [ ] Admin tidak memakai policy ini (guard sendiri)
-- [ ] Test: akses resource pelanggan lain → 403
+- [x] Pelanggan hanya bisa akses permintaan/penawaran/pesanan/ulasan/notifikasi miliknya
+- [x] Mitra hanya bisa akses pesanan di mana `id_mitra` miliknya
+- [x] Admin tidak memakai policy ini (guard sendiri)
+- [x] Test: akses resource pelanggan lain → 403
 
 ---
 
@@ -324,50 +325,50 @@
 ### T-18 — Daftar mitra + filter
 - **Modul:** M2
 - **Prioritas:** High
-- **Status:** Todo
+- **Status:** Done
 - **Dependensi:** T-17
 - **Estimasi:** 3 jam
 - **File:** `app/Http/Controllers/Api/Mitra/MitraDiscoveryController.php`, `app/Http/Resources/MitraResource.php`, `routes/api.php`
 
 **Endpoint:** `GET /api/mitra`
 
-- [ ] Hanya mitra `Disetujui` yang tampil
-- [ ] Filter `q` (nama usaha / alamat / nama layanan)
-- [ ] Filter `layanan`, `rating_min`, `buka`
-- [ ] Sort `rekomendasi` (rating desc), `rating`, `jarak` (dari lat/long bila ada)
-- [ ] Paginasi + `with('layanan')` (hindari N+1)
-- [ ] Response memuat: nama, badge verified, rating, `review_count`, alamat, jam operasional, `is_open`, layanan utama, `foto_toko`
+- [x] Hanya mitra `Disetujui` yang tampil
+- [x] Filter `q` (nama usaha / alamat / nama layanan)
+- [x] Filter `layanan`, `rating_min`, `buka`
+- [x] Sort `rekomendasi` (rating desc), `rating`, `jarak` (dari lat/long bila ada)
+- [x] Paginasi + `with('layanan')` (hindari N+1)
+- [x] Response memuat: nama, badge verified, rating, `review_count`, alamat, jam operasional, `is_open`, layanan utama, `foto_toko`
 
 ### T-19 — Detail mitra
 - **Modul:** M2
 - **Prioritas:** High
-- **Status:** Todo
+- **Status:** Done
 - **Dependensi:** T-18
 - **Estimasi:** 2 jam
 - **File:** controller & resource yang sama, `routes/api.php`
 
 **Endpoint:** `GET /api/mitra/{id}`
 
-- [ ] Identitas + status verifikasi
-- [ ] Deskripsi usaha, alamat, nomor telepon, jam operasional
-- [ ] Daftar layanan + galeri
-- [ ] Rating, jumlah ulasan, ulasan terbaru (maks 3)
-- [ ] `is_open` dihitung dari `jam_buka`/`jam_tutup` + waktu `Asia/Jakarta`
-- [ ] 404 jika mitra tidak ada / belum `Disetujui`
+- [x] Identitas + status verifikasi
+- [x] Deskripsi usaha, alamat, nomor telepon, jam operasional
+- [x] Daftar layanan + galeri
+- [x] Rating, jumlah ulasan, ulasan terbaru (maks 3)
+- [x] `is_open` dihitung dari `jam_buka`/`jam_tutup` + waktu `Asia/Jakarta`
+- [x] 404 jika mitra tidak ada / belum `Disetujui`
 
 ### T-20 — Ulasan mitra
 - **Modul:** M2
 - **Prioritas:** Mid
-- **Status:** Todo
+- **Status:** Done
 - **Dependensi:** T-19
 - **Estimasi:** 1 jam
 - **File:** controller & resource, `routes/api.php`
 
 **Endpoint:** `GET /api/mitra/{id}/ulasan`
 
-- [ ] Paginasi, urut terbaru
-- [ ] Hanya menampilkan nama pelanggan (tanpa email/telepon)
-- [ ] Menampilkan rating, komentar, waktu
+- [x] Paginasi, urut terbaru
+- [x] Hanya menampilkan nama pelanggan (tanpa email/telepon)
+- [x] Menampilkan rating, komentar, waktu
 
 ---
 
@@ -376,77 +377,77 @@
 ### T-21 — Generator `kode_pesanan`
 - **Modul:** M3
 - **Prioritas:** High
-- **Status:** Todo
+- **Status:** Done
 - **Dependensi:** T-08
 - **Estimasi:** 2 jam
 - **File:** `app/Services/KodePesananGenerator.php`
 
-- [ ] Format `SRV-{YYYY}-{5 digit urut}` (contoh `SRV-2026-00125`)
-- [ ] Unik; retry maksimal 3x bila bentrok
-- [ ] Dipanggil di dalam transaksi pembuatan permintaan
-- [ ] Unit test: 2 permintaan berurutan menghasilkan kode berbeda
+- [x] Format `SRV-{YYYY}-{5 digit urut}` (contoh `SRV-2026-00125`)
+- [x] Unik; retry maksimal 3x bila bentrok
+- [x] Dipanggil di dalam transaksi pembuatan permintaan
+- [x] Unit test: 2 permintaan berurutan menghasilkan kode berbeda
 
 ### T-22 — Buat permintaan service
 - **Modul:** M3
 - **Prioritas:** High
-- **Status:** Todo
+- **Status:** Done
 - **Dependensi:** T-21, T-17
 - **Estimasi:** 3 jam
 - **File:** `app/Http/Controllers/Api/Pelanggan/PermintaanController.php`, `app/Http/Requests/Pelanggan/StorePermintaanRequest.php`, `routes/api.php`
 
 **Endpoint:** `POST /api/permintaan` (middleware verifikasi)
 
-- [ ] Validasi: merek, model, kategori, deskripsi wajib; `lama_kerusakan`, `kondisi_hp`, `catatan_tambahan` opsional
-- [ ] Status awal `Mencari Penawaran`
-- [ ] `kode_pesanan` dari T-21
-- [ ] `id_pelanggan` dari token, **bukan** dari body
-- [ ] Response memuat `kode_pesanan` + id
-- [ ] Test: akun belum verifikasi → 403 (BR-01)
+- [x] Validasi: merek, model, kategori, deskripsi wajib; `lama_kerusakan`, `kondisi_hp`, `catatan_tambahan` opsional
+- [x] Status awal `Mencari Penawaran`
+- [x] `kode_pesanan` dari T-21
+- [x] `id_pelanggan` dari token, **bukan** dari body
+- [x] Response memuat `kode_pesanan` + id
+- [x] Test: akun belum verifikasi → 403 (BR-01)
 
 ### T-23 — Upload lampiran permintaan
 - **Modul:** M3
 - **Prioritas:** Mid
-- **Status:** Todo
+- **Status:** Done
 - **Dependensi:** T-22
 - **Estimasi:** 2 jam
 - **File:** `StorePermintaanRequest.php`, `app/Services/LampiranService.php`, `config/filesystems.php`
 
-- [ ] Terima `lampiran[]` maksimal 4 file
-- [ ] Validasi `image`, `mimes:jpg,jpeg,png,webp`, maks 2 MB per file
-- [ ] Simpan ke disk `public` (`lampiran/{id_permintaan}/`)
-- [ ] Hapus file lama bila permintaan diubah/dibatalkan
-- [ ] Response mengembalikan URL publik
-- [ ] Test: file > 2 MB → 422
+- [x] Terima `lampiran[]` maksimal 4 file
+- [x] Validasi `image`, `mimes:jpg,jpeg,png,webp`, maks 2 MB per file
+- [x] Simpan ke disk `public` (`lampiran/{id_permintaan}/`)
+- [x] Hapus file lama bila permintaan diubah/dibatalkan
+- [x] Response mengembalikan URL publik
+- [x] Test: file > 2 MB → 422
 
 ### T-24 — Detail permintaan
 - **Modul:** M3
 - **Prioritas:** Mid
-- **Status:** Todo
+- **Status:** Done
 - **Dependensi:** T-22
 - **Estimasi:** 1 jam
 - **File:** controller, `PermintaanResource.php`, `routes/api.php`
 
 **Endpoint:** `GET /api/permintaan/{id}`
 
-- [ ] Hanya pemilik (Policy)
-- [ ] Memuat lampiran, data HP, kerusakan, status, daftar penawaran ringkas
-- [ ] Menyertakan `status_kanonik` (bergantung T-29)
+- [x] Hanya pemilik (Policy)
+- [x] Memuat lampiran, data HP, kerusakan, status, daftar penawaran ringkas
+- [x] Menyertakan `status_kanonik` (bergantung T-29)
 
 ### T-25 — Batalkan permintaan
 - **Modul:** M3
 - **Prioritas:** High
-- **Status:** Todo
+- **Status:** Done
 - **Dependensi:** T-24
 - **Estimasi:** 2 jam
 - **File:** controller, `routes/api.php`
 
 **Endpoint:** `POST /api/permintaan/{id}/batalkan`
 
-- [ ] Hanya pemilik
-- [ ] Ditolak bila sudah ada `pesanan_aktif` (BR-06)
-- [ ] Ditolak bila status sudah `Dibatalkan`
-- [ ] Set `status_permintaan = Dibatalkan`
-- [ ] Test: setelah penawaran disetujui → 422
+- [x] Hanya pemilik
+- [x] Ditolak bila sudah ada `pesanan_aktif` (BR-06)
+- [x] Ditolak bila status sudah `Dibatalkan`
+- [x] Set `status_permintaan = Dibatalkan`
+- [x] Test: setelah penawaran disetujui → 422
 
 ---
 
@@ -512,15 +513,15 @@
 ### T-29 — Helper status kanonik
 - **Modul:** M5
 - **Prioritas:** High
-- **Status:** Todo
+- **Status:** Done
 - **Dependensi:** T-06
 - **Estimasi:** 2 jam
 - **File:** `app/Support/StatusPesanan.php`
 
-- [ ] Konstanta semua status DB (permintaan, penawaran, pesanan, pembayaran)
-- [ ] Method `kanonik(PermintaanService $p): string` sesuai tabel 2.3 tech spec
-- [ ] Method `label(string $kanonik): string` (Bahasa Indonesia)
-- [ ] Unit test untuk 10 status kanonik, termasuk `rejected` vs `cancelled`
+- [x] Konstanta semua status DB (permintaan, penawaran, pesanan, pembayaran)
+- [x] Method `kanonik(PermintaanService $p): string` sesuai tabel 2.3 tech spec
+- [x] Method `label(string $kanonik): string` (Bahasa Indonesia)
+- [x] Unit test untuk 10 status kanonik, termasuk `rejected` vs `cancelled`
 
 ### T-30 — Detail pesanan + timeline
 - **Modul:** M5

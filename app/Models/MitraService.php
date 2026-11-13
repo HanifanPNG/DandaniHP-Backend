@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Laravel\Sanctum\HasApiTokens;
 
 class MitraService extends Authenticatable
 {
+    use HasApiTokens;
+    
     protected $table = 'mitra_service';
     protected $primaryKey = 'id_mitra';
     public $timestamps = false;
@@ -51,5 +54,45 @@ class MitraService extends Authenticatable
     public function galeri()
     {
         return $this->hasMany(GaleriMitra::class, 'id_mitra', 'id_mitra');
+    }
+
+    /**
+     * Tiga ulasan terbaru untuk halaman detail mitra.
+     *
+     * Catatan: limit di eager load berlaku untuk keseluruhan hasil,
+     * jadi relasi ini hanya aman dipakai untuk satu mitra (halaman detail).
+     */
+    public function ulasanTerbaru()
+    {
+        return $this->hasMany(Ulasan::class, 'id_mitra', 'id_mitra')
+            ->orderByDesc('waktu_ulasan')
+            ->limit(3);
+    }
+
+    /** Kolom database "HH:MM:SS" dirapikan jadi "HH:MM" untuk API. */
+    public function jamBukaFormat(): ?string
+    {
+        return $this->jam_buka ? substr($this->jam_buka, 0, 5) : null;
+    }
+
+    public function jamTutupFormat(): ?string
+    {
+        return $this->jam_tutup ? substr($this->jam_tutup, 0, 5) : null;
+    }
+
+    /**
+     * Apakah mitra sedang buka saat request masuk?
+     * Dihitung dari jam WIB, bukan disimpan di database.
+     */
+    public function isOpen(): bool
+    {
+        if (! $this->jam_buka || ! $this->jam_tutup) {
+            return false;
+        }
+
+        $sekarang = now('Asia/Jakarta')->format('H:i');
+
+        return $sekarang >= $this->jamBukaFormat()
+            && $sekarang <= $this->jamTutupFormat();
     }
 }
