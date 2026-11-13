@@ -436,18 +436,18 @@
 ### T-25 — Batalkan permintaan
 - **Modul:** M3
 - **Prioritas:** High
-- **Status:** Todo
+- **Status:** Done
 - **Dependensi:** T-24
 - **Estimasi:** 2 jam
 - **File:** controller, `routes/api.php`
 
 **Endpoint:** `POST /api/permintaan/{id}/batalkan`
 
-- [ ] Hanya pemilik
-- [ ] Ditolak bila sudah ada `pesanan_aktif` (BR-06)
-- [ ] Ditolak bila status sudah `Dibatalkan`
-- [ ] Set `status_permintaan = Dibatalkan`
-- [ ] Test: setelah penawaran disetujui → 422
+- [x] Hanya pemilik
+- [x] Ditolak bila sudah ada `pesanan_aktif` (BR-06)
+- [x] Ditolak bila status sudah `Dibatalkan`
+- [x] Set `status_permintaan = Dibatalkan`
+- [x] Test: setelah penawaran disetujui → 422
 
 ---
 
