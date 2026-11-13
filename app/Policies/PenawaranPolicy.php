@@ -2,10 +2,8 @@
 
 namespace App\Policies;
 
-use App\Models\MitraService;
 use App\Models\PenawaranMitra;
 use App\Models\Pelanggan;
-use Illuminate\Auth\Access\Response;
 
 class PenawaranPolicy
 {
@@ -22,13 +20,9 @@ class PenawaranPolicy
      */
     public function view(Pelanggan $user, PenawaranMitra $penawaran): bool
     {
-        if ($user instanceof Pelanggan) {
-            return $penawaran->id_pelanggan === $user->id_pelanggan;
-        }
-        if ($user instanceof MitraService) {
-            return $user->id_mitra === $penawaran->id_mitra;
-        }
-        return false;
+        // Penawaran tidak menyimpan id_pelanggan, jadi kepemilikan
+        // dicek lewat permintaan induknya.
+        return $penawaran->permintaan->id_pelanggan === $user->id_pelanggan;
     }
 
     /**
@@ -44,13 +38,7 @@ class PenawaranPolicy
      */
     public function update(Pelanggan $user, PenawaranMitra $penawaran): bool
     {
-        if ($user instanceof Pelanggan) {
-            return $penawaran->id_pelanggan === $user->id_pelanggan;
-        }
-        if ($user instanceof MitraService) {
-            return $user->id_mitra === $penawaran->id_mitra;
-        }
-        return false;
+        return $penawaran->permintaan->id_pelanggan === $user->id_pelanggan;
     }
 
     /**
@@ -58,13 +46,7 @@ class PenawaranPolicy
      */
     public function delete(Pelanggan $user, PenawaranMitra $penawaran): bool
     {
-        if ($user instanceof Pelanggan) {
-            return $penawaran->id_pelanggan === $user->id_pelanggan;
-        }
-        if ($user instanceof MitraService) {
-            return $user->id_mitra === $penawaran->id_mitra;
-        }
-        return false;
+        return $penawaran->permintaan->id_pelanggan === $user->id_pelanggan;
     }
 
     /**

@@ -456,18 +456,18 @@
 ### T-26 — Daftar penawaran
 - **Modul:** M4
 - **Prioritas:** High
-- **Status:** Todo
+- **Status:** Done
 - **Dependensi:** T-25
 - **Estimasi:** 2 jam
 - **File:** `app/Http/Controllers/Api/Pelanggan/PenawaranController.php`, `PenawaranResource.php`, `routes/api.php`
 
 **Endpoint:** `GET /api/permintaan/{id}/penawaran`
 
-- [ ] Hanya pemilik permintaan
-- [ ] Menampilkan semua mitra yang menawar (D1)
-- [ ] Data: nama mitra, rating, harga, estimasi, catatan pemeriksaan, status
-- [ ] Sort default: harga terendah, bisa `?sort=rating`
-- [ ] Menyembunyikan penawaran `Kedaluwarsa` dari daftar keputusan
+- [x] Hanya pemilik permintaan
+- [x] Menampilkan semua mitra yang menawar (D1)
+- [x] Data: nama mitra, rating, harga, estimasi, catatan pemeriksaan, status
+- [x] Sort default: harga terendah, bisa `?sort=rating`
+- [x] Menyembunyikan penawaran `Kedaluwarsa` dari daftar keputusan
 
 ### T-27 — Setujui penawaran (transaksi)
 - **Modul:** M4
