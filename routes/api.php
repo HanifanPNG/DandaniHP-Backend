@@ -96,4 +96,6 @@ Route::middleware(['auth:mitra', 'verified.mitra'])->group(function () {
 
     // Pesanan yang sedang dikerjakan mitra.
     Route::get('/mitra/pesanan', [PesananMitraController::class, 'index']);
+    Route::post('/mitra/pesanan/{id}/status', [PesananMitraController::class, 'ubahStatus'])
+        ->whereNumber('id');
 });

@@ -38,11 +38,13 @@ class PesananPolicy
     }
 
     /**
-     * Determine whether the user can update the model.
+     * Hanya mitra pemilik pesanan yang boleh mengubah status/pembayaran.
+     * Pelanggan tidak punya aksi tulis pada pesanan.
      */
     public function update(Pelanggan|MitraService $user, PesananAktif $pesananAktif): bool
     {
-        return false;
+        return $user instanceof MitraService
+            && $pesananAktif->id_mitra === $user->id_mitra;
     }
 
     /**

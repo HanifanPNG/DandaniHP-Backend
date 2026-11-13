@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Api\Mitra;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Mitra\UpdateStatusRequest;
+use App\Http\Resources\PesananDetailResource;
 use App\Http\Resources\PesananResource;
 use App\Models\PesananAktif;
+use App\Services\PesananService;
 use App\Support\StatusPesanan;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -31,5 +34,27 @@ class PesananMitraController extends Controller
             ->get();
 
         return PesananResource::collection($pesanan);
+    }
+
+    // POST /api/mitra/pesanan/{id}/status
+    //
+    // Mitra memajukan status pengerjaan satu langkah sesuai urutan.
+    public function ubahStatus(UpdateStatusRequest $request, int $id, PesananService $service)
+    {
+        $pesanan = PesananAktif::findOrFail($id);
+
+        // Hanya mitra pemilik pesanan (PesananPolicy::update).
+        $this->authorize('update', $pesanan);
+
+        $pesanan = $service->ubahStatus(
+            $pesanan,
+            $request->validated('status_pengerjaan'),
+            $request->validated('catatan_perkembangan')
+        );
+
+        return response()->json([
+            'message' => 'Status pesanan diperbarui.',
+            'data'    => (new PesananDetailResource($pesanan))->resolve(),
+        ]);
     }
 }
