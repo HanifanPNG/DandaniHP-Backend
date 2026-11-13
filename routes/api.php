@@ -12,6 +12,7 @@ use App\Http\Controllers\Api\Pelanggan\RiwayatController;
 use App\Http\Controllers\Api\Mitra\MitraDiscoveryController;
 use App\Http\Controllers\Api\Mitra\PermintaanTerbukaController;
 use App\Http\Controllers\Api\Mitra\PenawaranMitraController;
+use App\Http\Controllers\Api\Mitra\PesananMitraController;
 
 
 Route::get('/ping', function () {
@@ -92,4 +93,7 @@ Route::middleware(['auth:mitra', 'verified.mitra'])->group(function () {
     Route::get('/mitra/permintaan', [PermintaanTerbukaController::class, 'index']);
     Route::post('/mitra/permintaan/{id}/penawaran', [PenawaranMitraController::class, 'store'])
         ->whereNumber('id');
+
+    // Pesanan yang sedang dikerjakan mitra.
+    Route::get('/mitra/pesanan', [PesananMitraController::class, 'index']);
 });

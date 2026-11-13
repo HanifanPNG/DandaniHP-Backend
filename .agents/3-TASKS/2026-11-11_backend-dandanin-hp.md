@@ -627,16 +627,16 @@
 ### T-36 — Daftar pesanan mitra
 - **Modul:** M6
 - **Prioritas:** Mid
-- **Status:** Todo
+- **Status:** Done
 - **Dependensi:** T-35
 - **Estimasi:** 1 jam
 - **File:** controller, `routes/api.php`
 
 **Endpoint:** `GET /api/mitra/pesanan`
 
-- [ ] Hanya pesanan `id_mitra` = mitra login
-- [ ] Filter status opsional
-- [ ] Ringkas: kode, HP, status, waktu update
+- [x] Hanya pesanan `id_mitra` = mitra login
+- [x] Filter status opsional
+- [x] Ringkas: kode, HP, status, waktu update
 
 ### T-37 — Update status pesanan (mitra)
 - **Modul:** M6
