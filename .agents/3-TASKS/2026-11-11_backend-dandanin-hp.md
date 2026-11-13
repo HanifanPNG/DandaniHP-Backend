@@ -558,18 +558,18 @@
 ### T-32 — Riwayat service
 - **Modul:** M5
 - **Prioritas:** High
-- **Status:** Todo
+- **Status:** Done
 - **Dependensi:** T-31
 - **Estimasi:** 2 jam
 - **File:** `app/Http/Controllers/Api/Pelanggan/RiwayatController.php`, `routes/api.php`
 
 **Endpoint:** `GET /api/riwayat?filter=`
 
-- [ ] Filter `semua`, `berlangsung`, `selesai`, `ditolak`, `dibatalkan` sesuai PRD
-- [ ] `rejected` = permintaan tanpa pesanan & semua penawaran ditolak
-- [ ] Item memuat kode pesanan, mitra, tipe HP, tanggal, biaya, badge status
-- [ ] Paginasi + empty state ditangani Flutter (API cukup mengembalikan array kosong)
-- [ ] Test tiap filter
+- [x] Filter `semua`, `berlangsung`, `selesai`, `ditolak`, `dibatalkan` sesuai PRD
+- [x] `rejected` = permintaan tanpa pesanan & semua penawaran ditolak
+- [x] Item memuat kode pesanan, mitra, tipe HP, tanggal, biaya, badge status
+- [x] Paginasi + empty state ditangani Flutter (API cukup mengembalikan array kosong)
+- [x] Test tiap filter
 
 ### T-33 — Detail riwayat
 - **Modul:** M5

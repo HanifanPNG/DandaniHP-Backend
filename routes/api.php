@@ -74,6 +74,9 @@ Route::middleware('auth:pelanggan')->group(function () {
     // Pesanan aktif pelanggan.
     Route::get('/pesanan', [PesananController::class, 'index']);
     Route::get('/pesanan/{id}', [PesananController::class, 'show'])->whereNumber('id');
+
+    // Riwayat service (semua permintaan milik pelanggan).
+    Route::get('/riwayat', [RiwayatController::class, 'index']);
 });
 
 // Aksi pelanggan yang butuh akun terverifikasi (BR-01).
