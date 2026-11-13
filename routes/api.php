@@ -51,6 +51,10 @@ Route::middleware('auth:pelanggan')->group(function () {
 
     // Detail permintaan: pemilik saja (dicek Policy).
     Route::get('/permintaan/{id}', [PermintaanController::class, 'show'])->whereNumber('id');
+
+    // BR-06: batal hanya sebelum ada pesanan aktif.
+    Route::post('/permintaan/{id}/batalkan', [PermintaanController::class, 'batalkan'])
+        ->whereNumber('id');
 });
 
 // Aksi pelanggan yang butuh akun terverifikasi (BR-01).

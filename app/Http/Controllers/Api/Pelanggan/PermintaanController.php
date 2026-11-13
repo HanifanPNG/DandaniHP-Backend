@@ -9,7 +9,9 @@ use App\Http\Resources\PermintaanResource;
 use App\Models\PermintaanService;
 use App\Services\KodePesananGenerator;
 use App\Services\LampiranService;
+use App\Support\StatusPesanan;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\ValidationException;
 
 class PermintaanController extends Controller
 {
@@ -94,5 +96,51 @@ class PermintaanController extends Controller
         $this->authorize('view', $permintaan);
 
         return new PermintaanDetailResource($permintaan);
+    }
+
+    // POST /api/permintaan/{id}/batalkan
+    //
+    // BR-06: pembatalan hanya boleh sebelum ada pesanan aktif.
+    // Setelah penawaran disetujui, pelanggan tidak bisa membatalkan
+    // lewat endpoint ini.
+    public function batalkan(int $id)
+    {
+        $permintaan = PermintaanService::with('pesanan')->findOrFail($id);
+
+        // Hanya pemilik permintaan yang boleh membatalkan.
+        $this->authorize('update', $permintaan);
+
+        // Sudah dibatalkan sebelumnya: tidak ada yang perlu diubah.
+        if ($permintaan->status_permintaan === StatusPesanan::PERMINTAAN_DIBATALKAN) {
+            throw ValidationException::withMessages([
+                'status_permintaan' => 'Permintaan ini sudah dibatalkan.',
+            ]);
+        }
+
+        // BR-06: pesanan aktif menandakan penawaran sudah disetujui,
+        // jadi proses lelang sudah tidak bisa dibatalkan sepihak.
+        if ($permintaan->pesanan !== null) {
+            throw ValidationException::withMessages([
+                'status_permintaan' => 'Permintaan tidak dapat dibatalkan karena sudah ada pesanan.',
+            ]);
+        }
+
+        DB::transaction(function () use ($permintaan) {
+            $permintaan->update([
+                'status_permintaan' => StatusPesanan::PERMINTAAN_DIBATALKAN,
+            ]);
+
+            // Lampiran tidak berguna lagi setelah dibatalkan, sekaligus
+            // menjaga storage tidak menumpuk file yatim.
+            app(LampiranService::class)->hapusSemua($permintaan->id_permintaan);
+        });
+
+        // Relasi dimuat ulang: lampiran sekarang kosong dan status berubah.
+        $permintaan->load('lampiran', 'penawaran.mitra', 'pesanan');
+
+        return response()->json([
+            'message' => 'Permintaan berhasil dibatalkan.',
+            'data'    => (new PermintaanDetailResource($permintaan))->resolve(),
+        ]);
     }
 }
