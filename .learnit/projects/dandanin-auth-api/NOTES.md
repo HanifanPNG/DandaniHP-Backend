@@ -2,7 +2,7 @@
 
 ## Status
 
-In Progress (33 step selesai)
+In Progress (38 step selesai)
 
 ## Tujuan Project
 

@@ -10,6 +10,10 @@ use App\Http\Controllers\Api\Pelanggan\PenawaranController;
 use App\Http\Controllers\Api\Pelanggan\PesananController;
 use App\Http\Controllers\Api\Pelanggan\RiwayatController;
 use App\Http\Controllers\Api\Mitra\MitraDiscoveryController;
+use App\Http\Controllers\Api\Mitra\PermintaanTerbukaController;
+use App\Http\Controllers\Api\Mitra\PenawaranMitraController;
+use App\Http\Controllers\Api\Mitra\PesananMitraController;
+use App\Http\Controllers\Api\Mitra\PembayaranMitraController;
 
 
 Route::get('/ping', function () {
@@ -83,4 +87,20 @@ Route::middleware('auth:pelanggan')->group(function () {
 // Aksi pelanggan yang butuh akun terverifikasi (BR-01).
 Route::middleware(['auth:pelanggan', 'verified.pelanggan'])->group(function () {
     Route::post('/permintaan', [PermintaanController::class, 'store']);
+});
+
+// Aksi mitra terverifikasi.
+Route::middleware(['auth:mitra', 'verified.mitra'])->group(function () {
+    Route::get('/mitra/permintaan', [PermintaanTerbukaController::class, 'index']);
+    Route::post('/mitra/permintaan/{id}/penawaran', [PenawaranMitraController::class, 'store'])
+        ->whereNumber('id');
+
+    // Pesanan yang sedang dikerjakan mitra.
+    Route::get('/mitra/pesanan', [PesananMitraController::class, 'index']);
+    Route::post('/mitra/pesanan/{id}/status', [PesananMitraController::class, 'ubahStatus'])
+        ->whereNumber('id');
+
+    // Konfirmasi pembayaran tunai (BR-08).
+    Route::post('/mitra/pesanan/{id}/pembayaran', [PembayaranMitraController::class, 'konfirmasi'])
+        ->whereNumber('id');
 });

@@ -593,50 +593,50 @@
 ### T-34 — Permintaan terbuka untuk mitra
 - **Modul:** M6
 - **Prioritas:** High
-- **Status:** Todo
+- **Status:** Done
 - **Dependensi:** T-17
 - **Estimasi:** 2 jam
 - **File:** `app/Http/Controllers/Api/Mitra/PermintaanTerbukaController.php`, `routes/api.php`
 
 **Endpoint:** `GET /api/mitra/permintaan`
 
-- [ ] Hanya `status_permintaan = Mencari Penawaran`
-- [ ] Kecualikan permintaan yang sudah ditawar mitra ini
-- [ ] Hanya untuk mitra `Disetujui`
-- [ ] Paginasi + filter kategori
-- [ ] Tidak menampilkan data pribadi pelanggan (nama boleh disamarkan)
+- [x] Hanya `status_permintaan = Mencari Penawaran`
+- [x] Kecualikan permintaan yang sudah ditawar mitra ini
+- [x] Hanya untuk mitra `Disetujui`
+- [x] Paginasi + filter kategori
+- [x] Tidak menampilkan data pribadi pelanggan (nama boleh disamarkan)
 
 ### T-35 — Kirim penawaran
 - **Modul:** M6
 - **Prioritas:** High
-- **Status:** Todo
+- **Status:** Done
 - **Dependensi:** T-34
 - **Estimasi:** 2 jam
 - **File:** `app/Http/Controllers/Api/Mitra/PenawaranMitraController.php`, `StorePenawaranRequest.php`, `routes/api.php`
 
 **Endpoint:** `POST /api/mitra/permintaan/{id}/penawaran`
 
-- [ ] Mitra harus `Disetujui` (middleware)
-- [ ] Permintaan harus `Mencari Penawaran`
-- [ ] Harga > 0, estimasi wajib, catatan opsional
-- [ ] `id_mitra` dari token, bukan body
-- [ ] Duplikat → 422 dengan pesan jelas (guard unique DB)
-- [ ] Membuat notifikasi `Penawaran` untuk pelanggan
-- [ ] Test: mitra `Menunggu` → 403; penawaran ganda → 422
+- [x] Mitra harus `Disetujui` (middleware)
+- [x] Permintaan harus `Mencari Penawaran`
+- [x] Harga > 0, estimasi wajib, catatan opsional
+- [x] `id_mitra` dari token, bukan body
+- [x] Duplikat → 422 dengan pesan jelas (guard unique DB)
+- [x] Membuat notifikasi `Penawaran` untuk pelanggan
+- [x] Test: mitra `Menunggu` → 403; penawaran ganda → 422
 
 ### T-36 — Daftar pesanan mitra
 - **Modul:** M6
 - **Prioritas:** Mid
-- **Status:** Todo
+- **Status:** Done
 - **Dependensi:** T-35
 - **Estimasi:** 1 jam
 - **File:** controller, `routes/api.php`
 
 **Endpoint:** `GET /api/mitra/pesanan`
 
-- [ ] Hanya pesanan `id_mitra` = mitra login
-- [ ] Filter status opsional
-- [ ] Ringkas: kode, HP, status, waktu update
+- [x] Hanya pesanan `id_mitra` = mitra login
+- [x] Filter status opsional
+- [x] Ringkas: kode, HP, status, waktu update
 
 ### T-37 — Update status pesanan (mitra)
 - **Modul:** M6
@@ -659,7 +659,7 @@
 ### T-38 — Konfirmasi pembayaran tunai
 - **Modul:** M6
 - **Prioritas:** High
-- **Status:** Todo
+- **Status:** Done
 - **Dependensi:** T-37
 - **Estimasi:** 2 jam
 - **File:** `app/Services/PembayaranService.php`, controller, `routes/api.php`

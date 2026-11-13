@@ -38,6 +38,17 @@ class StatusPesanan
     public const PEMBAYARAN_MENUNGGU = 'Menunggu Konfirmasi';
     public const PEMBAYARAN_DITERIMA = 'Diterima';
 
+    // Semua nilai status_pengerjaan, dipakai untuk validasi input
+    // dan whitelist transisi di PesananService.
+    public const DAFTAR_PENGERJAAN = [
+        self::PESANAN_MASUK_ANTREAN,
+        self::PESANAN_SEDANG_DIPROSES,
+        self::PESANAN_SERVICE_SELESAI,
+        self::PESANAN_MENUNGGU_PEMBAYARAN,
+        self::PESANAN_PEMBAYARAN_DITERIMA,
+        self::PESANAN_SELESAI,
+    ];
+
     // --- Kunci kanonik yang dikirim ke aplikasi ---
 
     public const WAITING_OFFER = 'waiting_offer';
