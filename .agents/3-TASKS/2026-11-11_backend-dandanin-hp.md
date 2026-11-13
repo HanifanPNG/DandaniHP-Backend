@@ -593,18 +593,18 @@
 ### T-34 — Permintaan terbuka untuk mitra
 - **Modul:** M6
 - **Prioritas:** High
-- **Status:** Todo
+- **Status:** Done
 - **Dependensi:** T-17
 - **Estimasi:** 2 jam
 - **File:** `app/Http/Controllers/Api/Mitra/PermintaanTerbukaController.php`, `routes/api.php`
 
 **Endpoint:** `GET /api/mitra/permintaan`
 
-- [ ] Hanya `status_permintaan = Mencari Penawaran`
-- [ ] Kecualikan permintaan yang sudah ditawar mitra ini
-- [ ] Hanya untuk mitra `Disetujui`
-- [ ] Paginasi + filter kategori
-- [ ] Tidak menampilkan data pribadi pelanggan (nama boleh disamarkan)
+- [x] Hanya `status_permintaan = Mencari Penawaran`
+- [x] Kecualikan permintaan yang sudah ditawar mitra ini
+- [x] Hanya untuk mitra `Disetujui`
+- [x] Paginasi + filter kategori
+- [x] Tidak menampilkan data pribadi pelanggan (nama boleh disamarkan)
 
 ### T-35 — Kirim penawaran
 - **Modul:** M6

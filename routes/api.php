@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\Pelanggan\PenawaranController;
 use App\Http\Controllers\Api\Pelanggan\PesananController;
 use App\Http\Controllers\Api\Pelanggan\RiwayatController;
 use App\Http\Controllers\Api\Mitra\MitraDiscoveryController;
+use App\Http\Controllers\Api\Mitra\PermintaanTerbukaController;
 
 
 Route::get('/ping', function () {
@@ -83,4 +84,9 @@ Route::middleware('auth:pelanggan')->group(function () {
 // Aksi pelanggan yang butuh akun terverifikasi (BR-01).
 Route::middleware(['auth:pelanggan', 'verified.pelanggan'])->group(function () {
     Route::post('/permintaan', [PermintaanController::class, 'store']);
+});
+
+// Aksi mitra terverifikasi.
+Route::middleware(['auth:mitra', 'verified.mitra'])->group(function () {
+    Route::get('/mitra/permintaan', [PermintaanTerbukaController::class, 'index']);
 });
