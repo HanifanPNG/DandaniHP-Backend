@@ -544,16 +544,16 @@
 ### T-31 — Daftar pesanan aktif
 - **Modul:** M5
 - **Prioritas:** Mid
-- **Status:** Todo
+- **Status:** Done
 - **Dependensi:** T-30
 - **Estimasi:** 1 jam
 - **File:** controller, `routes/api.php`
 
 **Endpoint:** `GET /api/pesanan`
 
-- [ ] Hanya pesanan milik pelanggan dengan status belum `Pesanan Selesai`
-- [ ] Urut `waktu_update_terakhir` desc
-- [ ] Response ringkas untuk kartu beranda
+- [x] Hanya pesanan milik pelanggan dengan status belum `Pesanan Selesai`
+- [x] Urut `waktu_update_terakhir` desc
+- [x] Response ringkas untuk kartu beranda
 
 ### T-32 — Riwayat service
 - **Modul:** M5

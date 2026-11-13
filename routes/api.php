@@ -71,7 +71,8 @@ Route::middleware('auth:pelanggan')->group(function () {
     Route::post('/penawaran/{id}/tolak', [PenawaranController::class, 'tolak'])
         ->whereNumber('id');
 
-    // Detail pesanan aktif.
+    // Pesanan aktif pelanggan.
+    Route::get('/pesanan', [PesananController::class, 'index']);
     Route::get('/pesanan/{id}', [PesananController::class, 'show'])->whereNumber('id');
 });
 
