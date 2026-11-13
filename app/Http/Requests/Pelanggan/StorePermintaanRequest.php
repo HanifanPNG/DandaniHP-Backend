@@ -36,6 +36,11 @@ class StorePermintaanRequest extends FormRequest
             // prohibited membuat request yang mencoba mengirimnya ditolak 422,
             // sehingga tidak ada pikiran "mungkin bisa dipalsukan".
             'id_pelanggan'        => ['prohibited'],
+
+            // Maksimal 4 foto kerusakan. Setiap file harus gambar
+            // dan maksimal 2 MB (2048 KB).
+            'lampiran'            => ['nullable', 'array', 'max:4'],
+            'lampiran.*'          => ['image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
         ];
     }
 }

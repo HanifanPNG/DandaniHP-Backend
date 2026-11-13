@@ -407,17 +407,17 @@
 ### T-23 — Upload lampiran permintaan
 - **Modul:** M3
 - **Prioritas:** Mid
-- **Status:** Todo
+- **Status:** Done
 - **Dependensi:** T-22
 - **Estimasi:** 2 jam
 - **File:** `StorePermintaanRequest.php`, `app/Services/LampiranService.php`, `config/filesystems.php`
 
-- [ ] Terima `lampiran[]` maksimal 4 file
-- [ ] Validasi `image`, `mimes:jpg,jpeg,png,webp`, maks 2 MB per file
-- [ ] Simpan ke disk `public` (`lampiran/{id_permintaan}/`)
-- [ ] Hapus file lama bila permintaan diubah/dibatalkan
-- [ ] Response mengembalikan URL publik
-- [ ] Test: file > 2 MB → 422
+- [x] Terima `lampiran[]` maksimal 4 file
+- [x] Validasi `image`, `mimes:jpg,jpeg,png,webp`, maks 2 MB per file
+- [x] Simpan ke disk `public` (`lampiran/{id_permintaan}/`)
+- [x] Hapus file lama bila permintaan diubah/dibatalkan
+- [x] Response mengembalikan URL publik
+- [x] Test: file > 2 MB → 422
 
 ### T-24 — Detail permintaan
 - **Modul:** M3

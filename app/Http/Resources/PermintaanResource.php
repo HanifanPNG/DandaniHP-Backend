@@ -28,6 +28,14 @@ class PermintaanResource extends JsonResource
 
             // BR-12: tanggal ISO-8601 dengan zona Asia/Jakarta.
             'waktu_dibuat'        => $this->waktu_dibuat?->toIso8601String(),
+
+            // URL publik lampiran (kosong kalau tidak ada file yang diunggah).
+            'lampiran'            => $this->whenLoaded('lampiran', fn () => $this->lampiran
+                ->map(fn ($item) => [
+                    'id_lampiran' => $item->id_lampiran,
+                    'url'         => app(\App\Services\LampiranService::class)->url($item->path),
+                ])
+                ->values()),
         ];
     }
 }
