@@ -11,6 +11,7 @@ use App\Http\Controllers\Api\Pelanggan\PesananController;
 use App\Http\Controllers\Api\Pelanggan\RiwayatController;
 use App\Http\Controllers\Api\Mitra\MitraDiscoveryController;
 use App\Http\Controllers\Api\Mitra\PermintaanTerbukaController;
+use App\Http\Controllers\Api\Mitra\PenawaranMitraController;
 
 
 Route::get('/ping', function () {
@@ -89,4 +90,6 @@ Route::middleware(['auth:pelanggan', 'verified.pelanggan'])->group(function () {
 // Aksi mitra terverifikasi.
 Route::middleware(['auth:mitra', 'verified.mitra'])->group(function () {
     Route::get('/mitra/permintaan', [PermintaanTerbukaController::class, 'index']);
+    Route::post('/mitra/permintaan/{id}/penawaran', [PenawaranMitraController::class, 'store'])
+        ->whereNumber('id');
 });

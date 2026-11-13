@@ -609,20 +609,20 @@
 ### T-35 — Kirim penawaran
 - **Modul:** M6
 - **Prioritas:** High
-- **Status:** Todo
+- **Status:** Done
 - **Dependensi:** T-34
 - **Estimasi:** 2 jam
 - **File:** `app/Http/Controllers/Api/Mitra/PenawaranMitraController.php`, `StorePenawaranRequest.php`, `routes/api.php`
 
 **Endpoint:** `POST /api/mitra/permintaan/{id}/penawaran`
 
-- [ ] Mitra harus `Disetujui` (middleware)
-- [ ] Permintaan harus `Mencari Penawaran`
-- [ ] Harga > 0, estimasi wajib, catatan opsional
-- [ ] `id_mitra` dari token, bukan body
-- [ ] Duplikat → 422 dengan pesan jelas (guard unique DB)
-- [ ] Membuat notifikasi `Penawaran` untuk pelanggan
-- [ ] Test: mitra `Menunggu` → 403; penawaran ganda → 422
+- [x] Mitra harus `Disetujui` (middleware)
+- [x] Permintaan harus `Mencari Penawaran`
+- [x] Harga > 0, estimasi wajib, catatan opsional
+- [x] `id_mitra` dari token, bukan body
+- [x] Duplikat → 422 dengan pesan jelas (guard unique DB)
+- [x] Membuat notifikasi `Penawaran` untuk pelanggan
+- [x] Test: mitra `Menunggu` → 403; penawaran ganda → 422
 
 ### T-36 — Daftar pesanan mitra
 - **Modul:** M6
