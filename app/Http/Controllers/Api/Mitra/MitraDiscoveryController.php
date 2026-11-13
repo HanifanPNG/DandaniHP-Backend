@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Api\Mitra;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\MitraService;
+use App\Http\Resources\MitraDetailResource;
 use App\Http\Resources\MitraResource;
+use App\Http\Resources\UlasanResource;
 
 class MitraDiscoveryController extends Controller
 {
@@ -85,5 +87,47 @@ class MitraDiscoveryController extends Controller
         // Resource collection otomatis membungkus "data" + "meta" paginasi.
         return MitraResource::collection($mitra);
 
+    }
+
+    /**
+     * GET /api/mitra/{id}
+     *
+     * Detail satu mitra. Mitra yang belum disetujui diperlakukan
+     * sebagai tidak ada (404), bukan 403, agar keberadaannya
+     * tidak terbocorkan ke publik.
+     */
+    public function show($id)
+    {
+        $mitra = MitraService::query()
+            ->where('status_verifikasi', 'Disetujui')
+            ->with('layanan', 'galeri')
+            ->withCount('ulasan')
+            // Eager load 3 ulasan terbaru + nama pelanggannya sekaligus.
+            ->with('ulasanTerbaru.pelanggan:id_pelanggan,nama_lengkap')
+            ->findOrFail($id);
+
+        return new MitraDetailResource($mitra);
+    }
+
+    /**
+     * GET /api/mitra/{id}/ulasan
+     *
+     * Daftar ulasan mitra, terbaru dulu, dengan paginasi.
+     */
+    public function ulasan(Request $request, $id)
+    {
+        $mitra = MitraService::query()
+            ->where('status_verifikasi', 'Disetujui')
+            ->findOrFail($id);
+
+        $perPage = min(max($request->integer('per_page', 10), 1), 50);
+
+        $ulasan = $mitra->ulasan()
+            ->with('pelanggan:id_pelanggan,nama_lengkap')
+            ->orderByDesc('waktu_ulasan')
+            ->paginate($perPage)
+            ->appends($request->query());
+
+        return UlasanResource::collection($ulasan);
     }
 }

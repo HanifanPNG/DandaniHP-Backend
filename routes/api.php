@@ -43,4 +43,8 @@ Route::middleware('auth:admin')->group(function () {
     Route::patch('/admin/mitra/{id}/verifikasi', [VerifikasiController::class, 'verifikasiMitra']);
 });
 
-Route::middleware('auth:pelanggan')->get('/mitra', [MitraDiscoveryController::class, 'index']);
+Route::middleware('auth:pelanggan')->group(function () {
+    Route::get('/mitra', [MitraDiscoveryController::class, 'index']);
+    Route::get('/mitra/{id}', [MitraDiscoveryController::class, 'show'])->whereNumber('id');
+    Route::get('/mitra/{id}/ulasan', [MitraDiscoveryController::class, 'ulasan'])->whereNumber('id');
+});

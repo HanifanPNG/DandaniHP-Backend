@@ -5,16 +5,17 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/**
+ * Bentuk data mitra untuk daftar (GET /api/mitra).
+ *
+ * Resource bertugas menyaring kolom: hanya yang dibutuhkan aplikasi
+ * yang keluar, misalnya kata_sandi dan status_verifikasi tidak ikut.
+ */
 class MitraResource extends JsonResource
 {
-    /**
-     * Transform the resource into an array.
-     *
-     * @return array<string, mixed>
-     */
     public function toArray(Request $request): array
     {
-               return [
+        return [
             'id_mitra'        => $this->id_mitra,
             'nama_usaha'      => $this->nama_usaha,
             'alamat_usaha'    => $this->alamat_usaha,
@@ -30,8 +31,8 @@ class MitraResource extends JsonResource
             'layanan'         => $this->layanan->pluck('nama_layanan')->values(),
 
             'jam_operasional' => $this->jam_operasional,
-            'jam_buka'        => $this->jamBuka(),
-            'jam_tutup'       => $this->jamTutup(),
+            'jam_buka'        => $this->jamBukaFormat(),
+            'jam_tutup'       => $this->jamTutupFormat(),
             'is_open'         => $this->isOpen(),
 
             // Hanya ada jika request memakai sort=jarak + lat/lng.
@@ -39,29 +40,5 @@ class MitraResource extends JsonResource
                 ? round((float) $this->jarak, 2)
                 : null,
         ];
-    }
-
-    /** Ambil "HH:MM" dari kolom time "HH:MM:SS". */
-    private function jamBuka(): ?string
-    {
-        return $this->jam_buka ? substr($this->jam_buka, 0, 5) : null;
-    }
-
-    private function jamTutup(): ?string
-    {
-        return $this->jam_tutup ? substr($this->jam_tutup, 0, 5) : null;
-    }
-
-    /** Status buka dihitung saat request, bukan disimpan di database. */
-    private function isOpen(): bool
-    {
-        if (! $this->jam_buka || ! $this->jam_tutup) {
-            return false;
-        }
-
-        // Keduanya diformat "HH:MM" agar perbandingan string konsisten.
-        $sekarang = now('Asia/Jakarta')->format('H:i');
-
-        return $sekarang >= $this->jamBuka() && $sekarang <= $this->jamTutup();
     }
 }
