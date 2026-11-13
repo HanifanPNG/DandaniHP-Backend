@@ -716,23 +716,23 @@
 ### T-41 — `NotifikasiService` + titik pembuatan
 - **Modul:** M8
 - **Prioritas:** High
-- **Status:** Todo
+- **Status:** Done
 - **Dependensi:** T-38
 - **Estimasi:** 3 jam
 - **File:** `app/Services/NotifikasiService.php`, `app/Support/TipeNotifikasi.php`
 
 **Deskripsi:** Satu tempat pembuatan notifikasi; jangan menulis `DB::table('notifikasi')->insert` tersebar.
 
-- [ ] Method `kirim(Pelanggan $p, string $tipe, string $judul, string $pesan, ?int $idPesanan)`
-- [ ] Tipe sesuai PRD: `Penawaran`, `Progres`, `Pembayaran`, `Selesai`, `Ulasan`
-- [ ] Dipanggil saat: penawaran masuk (T-35), penawaran disetujui (T-27), status berubah (T-37), service selesai (T-37), pembayaran diterima (T-38), pesanan selesai (T-37)
-- [ ] Tidak membuat notifikasi duplikat untuk event yang sama
-- [ ] Unit test: setiap event menghasilkan 1 notifikasi dengan tipe benar
+- [x] Method `kirim(Pelanggan $p, string $tipe, string $judul, string $pesan, ?int $idPesanan)`
+- [x] Tipe sesuai PRD: `Penawaran`, `Progres`, `Pembayaran`, `Selesai`, `Ulasan`
+- [x] Dipanggil saat: penawaran masuk (T-35), penawaran disetujui (T-27), status berubah (T-37), service selesai (T-37), pembayaran diterima (T-38), pesanan selesai (T-37)
+- [x] Tidak membuat notifikasi duplikat untuk event yang sama
+- [x] Unit test: setiap event menghasilkan 1 notifikasi dengan tipe benar
 
 ### T-42 — Endpoint notifikasi
 - **Modul:** M8
 - **Prioritas:** High
-- **Status:** Todo
+- **Status:** Done
 - **Dependensi:** T-41
 - **Estimasi:** 2 jam
 - **File:** `app/Http/Controllers/Api/Pelanggan/NotifikasiController.php`, `routes/api.php`
