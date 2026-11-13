@@ -422,16 +422,16 @@
 ### T-24 — Detail permintaan
 - **Modul:** M3
 - **Prioritas:** Mid
-- **Status:** Todo
+- **Status:** Done
 - **Dependensi:** T-22
 - **Estimasi:** 1 jam
 - **File:** controller, `PermintaanResource.php`, `routes/api.php`
 
 **Endpoint:** `GET /api/permintaan/{id}`
 
-- [ ] Hanya pemilik (Policy)
-- [ ] Memuat lampiran, data HP, kerusakan, status, daftar penawaran ringkas
-- [ ] Menyertakan `status_kanonik` (bergantung T-29)
+- [x] Hanya pemilik (Policy)
+- [x] Memuat lampiran, data HP, kerusakan, status, daftar penawaran ringkas
+- [x] Menyertakan `status_kanonik` (bergantung T-29)
 
 ### T-25 — Batalkan permintaan
 - **Modul:** M3
@@ -513,15 +513,15 @@
 ### T-29 — Helper status kanonik
 - **Modul:** M5
 - **Prioritas:** High
-- **Status:** Todo
+- **Status:** Done
 - **Dependensi:** T-06
 - **Estimasi:** 2 jam
 - **File:** `app/Support/StatusPesanan.php`
 
-- [ ] Konstanta semua status DB (permintaan, penawaran, pesanan, pembayaran)
-- [ ] Method `kanonik(PermintaanService $p): string` sesuai tabel 2.3 tech spec
-- [ ] Method `label(string $kanonik): string` (Bahasa Indonesia)
-- [ ] Unit test untuk 10 status kanonik, termasuk `rejected` vs `cancelled`
+- [x] Konstanta semua status DB (permintaan, penawaran, pesanan, pembayaran)
+- [x] Method `kanonik(PermintaanService $p): string` sesuai tabel 2.3 tech spec
+- [x] Method `label(string $kanonik): string` (Bahasa Indonesia)
+- [x] Unit test untuk 10 status kanonik, termasuk `rejected` vs `cancelled`
 
 ### T-30 — Detail pesanan + timeline
 - **Modul:** M5
