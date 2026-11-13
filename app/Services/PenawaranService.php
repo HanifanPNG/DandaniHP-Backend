@@ -2,11 +2,11 @@
 
 namespace App\Services;
 
-use App\Models\Notifikasi;
 use App\Models\PenawaranMitra;
 use App\Models\PermintaanService;
 use App\Models\PesananAktif;
 use App\Models\RiwayatStatusPesanan;
+use App\Services\NotifikasiService;
 use App\Support\StatusPesanan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
@@ -95,15 +95,15 @@ class PenawaranService
             ]);
 
             // 6. Beri tahu pelanggan bahwa penawarannya disetujui.
-            Notifikasi::create([
-                'id_pelanggan' => $permintaan->id_pelanggan,
-                'tipe'         => 'Penawaran',
-                'judul'        => 'Penawaran disetujui',
-                'pesan'        => 'Penawaran dari '.($penawaran->mitra?->nama_usaha ?? 'mitra')
+            $notifikasiService = app(NotifikasiService::class);
+            $notifikasiService->kirimKePelanggan(
+                $permintaan->pelanggan,
+                'Penawaran',
+                'Penawaran disetujui',
+                'Penawaran dari '.($penawaran->mitra?->nama_usaha ?? 'mitra')
                     .' telah disetujui. Pesanan masuk antrean mitra.',
-                'id_pesanan'   => $pesanan->id_pesanan,
-                'waktu_dibuat' => now(),
-            ]);
+                $pesanan->id_pesanan
+            );
 
             // Relasi disiapkan agar resource tidak query ulang.
             $pesanan->setRelation('permintaan', $permintaan);

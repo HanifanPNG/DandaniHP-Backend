@@ -11,7 +11,7 @@ class Notifikasi extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'id_pelanggan', 'tipe', 'judul', 'pesan',
+        'id_pelanggan', 'id_mitra', 'tipe', 'judul', 'pesan',
         'id_pesanan', 'dibaca', 'waktu_dibuat',
     ];
 
@@ -26,6 +26,11 @@ class Notifikasi extends Model
     public function pelanggan()
     {
         return $this->belongsTo(Pelanggan::class, 'id_pelanggan', 'id_pelanggan');
+    }
+
+    public function mitra()
+    {
+        return $this->belongsTo(MitraService::class, 'id_mitra', 'id_mitra');
     }
 
     public function pesanan()
