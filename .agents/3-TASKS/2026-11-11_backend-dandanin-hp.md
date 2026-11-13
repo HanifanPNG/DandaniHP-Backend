@@ -659,7 +659,7 @@
 ### T-38 — Konfirmasi pembayaran tunai
 - **Modul:** M6
 - **Prioritas:** High
-- **Status:** Todo
+- **Status:** Done
 - **Dependensi:** T-37
 - **Estimasi:** 2 jam
 - **File:** `app/Services/PembayaranService.php`, controller, `routes/api.php`

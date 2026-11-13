@@ -33,6 +33,7 @@ class PesananDetailResource extends JsonResource
             'kode_pesanan'     => $permintaan?->kode_pesanan,
 
             'status_pengerjaan' => $this->status_pengerjaan,
+            'catatan_perkembangan' => $this->catatan_perkembangan,
             'status_kanonik'    => $kanonik,
             'label_status'      => StatusPesanan::label($kanonik),
 
@@ -58,12 +59,12 @@ class PesananDetailResource extends JsonResource
 
             // BR-07: hanya informasi, tidak ada tombol/aksi konfirmasi
             // pembayaran di sisi pelanggan.
-            'pembayaran' => $pembayaran === null ? null : [
-                'id_pembayaran'          => $pembayaran->id_pembayaran,
-                'jumlah_pembayaran'      => (int) $pembayaran->jumlah_pembayaran,
-                'status_pembayaran'      => $pembayaran->status_pembayaran,
-                'waktu_dibuat'           => $pembayaran->waktu_dibuat?->toIso8601String(),
-                'waktu_konfirmasi_mitra' => $pembayaran->waktu_konfirmasi_mitra?->toIso8601String(),
+            'pembayaran' => $this->pembayaran === null ? null : [
+                'id_pembayaran'          => $this->pembayaran->id_pembayaran,
+                'jumlah_pembayaran'      => (int) $this->pembayaran->jumlah_pembayaran,
+                'status_pembayaran'      => $this->pembayaran->status_pembayaran,
+                'waktu_dibuat'           => $this->pembayaran->waktu_dibuat?->toIso8601String(),
+                'waktu_konfirmasi_mitra' => $this->pembayaran->waktu_konfirmasi_mitra?->toIso8601String(),
             ],
 
             // Timeline perubahan status, sudah urut waktu dari relasi.
