@@ -16,6 +16,7 @@ use App\Http\Controllers\Api\Mitra\PesananMitraController;
 use App\Http\Controllers\Api\Mitra\PembayaranMitraController;
 use App\Http\Controllers\Api\Pelanggan\UlasanController;
 use App\Http\Controllers\Api\Pelanggan\NotifikasiController;
+use App\Http\Controllers\Api\Pelanggan\ProfilController;
 
 
 Route::get('/ping', function () {
@@ -57,6 +58,10 @@ Route::middleware('auth:pelanggan')->group(function () {
     Route::get('/mitra', [MitraDiscoveryController::class, 'index']);
     Route::get('/mitra/{id}', [MitraDiscoveryController::class, 'show'])->whereNumber('id');
     Route::get('/mitra/{id}/ulasan', [MitraDiscoveryController::class, 'ulasan'])->whereNumber('id');
+
+    // Profil pelanggan (lihat & update).
+    Route::get('/profil', [ProfilController::class, 'show']);
+    Route::put('/profil', [ProfilController::class, 'update']);
 
     // Detail permintaan: pemilik saja (dicek Policy).
     Route::get('/permintaan/{id}', [PermintaanController::class, 'show'])->whereNumber('id');
