@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\Auth\MitraAuthController;
 use App\Http\Controllers\Api\Auth\AdminAuthController;
 use App\Http\Controllers\Api\Admin\VerifikasiController;
 use App\Http\Controllers\Api\Pelanggan\PermintaanController;
+use App\Http\Controllers\Api\Pelanggan\PenawaranController;
 use App\Http\Controllers\Api\Mitra\MitraDiscoveryController;
 
 
@@ -54,6 +55,18 @@ Route::middleware('auth:pelanggan')->group(function () {
 
     // BR-06: batal hanya sebelum ada pesanan aktif.
     Route::post('/permintaan/{id}/batalkan', [PermintaanController::class, 'batalkan'])
+        ->whereNumber('id');
+
+    // Daftar penawaran untuk satu permintaan (pemilik saja).
+    Route::get('/permintaan/{id}/penawaran', [PenawaranController::class, 'index'])
+        ->whereNumber('id');
+
+    // Menyetujui penawaran -> membuat pesanan aktif (BR-04).
+    Route::post('/penawaran/{id}/setujui', [PenawaranController::class, 'setujui'])
+        ->whereNumber('id');
+
+    // Menolak penawaran -> tidak membuat pesanan (BR-05).
+    Route::post('/penawaran/{id}/tolak', [PenawaranController::class, 'tolak'])
         ->whereNumber('id');
 });
 

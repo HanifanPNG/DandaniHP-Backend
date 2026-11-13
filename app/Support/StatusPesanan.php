@@ -81,16 +81,7 @@ class StatusPesanan
         $pesanan = $permintaan->pesanan;
 
         if ($pesanan !== null) {
-            return match ($pesanan->status_pengerjaan) {
-                self::PESANAN_MASUK_ANTREAN       => self::QUEUED,
-                self::PESANAN_SEDANG_DIPROSES     => self::IN_PROGRESS,
-                self::PESANAN_SERVICE_SELESAI     => self::SERVICE_COMPLETED,
-                self::PESANAN_MENUNGGU_PEMBAYARAN => self::WAITING_CASH_PAYMENT,
-                self::PESANAN_PEMBAYARAN_DITERIMA => self::PAYMENT_RECEIVED,
-                self::PESANAN_SELESAI             => self::COMPLETED,
-                // Nilai tak dikenal jangan sampai membuat error 500.
-                default                           => self::IN_PROGRESS,
-            };
+            return self::kanonikPengerjaan($pesanan->status_pengerjaan);
         }
 
         $penawaran = $permintaan->penawaran;
@@ -113,6 +104,22 @@ class StatusPesanan
         }
 
         return self::WAITING_OFFER;
+    }
+
+    // Menerjemahkan status_pengerjaan pesanan menjadi kunci kanonik.
+    // Dipisah supaya bisa dipakai resource pesanan tanpa memuat permintaan.
+    public static function kanonikPengerjaan(string $statusPengerjaan): string
+    {
+        return match ($statusPengerjaan) {
+            self::PESANAN_MASUK_ANTREAN       => self::QUEUED,
+            self::PESANAN_SEDANG_DIPROSES     => self::IN_PROGRESS,
+            self::PESANAN_SERVICE_SELESAI     => self::SERVICE_COMPLETED,
+            self::PESANAN_MENUNGGU_PEMBAYARAN => self::WAITING_CASH_PAYMENT,
+            self::PESANAN_PEMBAYARAN_DITERIMA => self::PAYMENT_RECEIVED,
+            self::PESANAN_SELESAI             => self::COMPLETED,
+            // Nilai tak dikenal jangan sampai membuat error 500.
+            default                           => self::IN_PROGRESS,
+        };
     }
 
     public static function label(string $kanonik): string
