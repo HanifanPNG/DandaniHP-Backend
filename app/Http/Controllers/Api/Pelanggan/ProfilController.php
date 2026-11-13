@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Api\Pelanggan;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Pelanggan\UpdateKataSandiRequest;
 use App\Http\Requests\Pelanggan\UpdateProfilRequest;
 use App\Http\Resources\PelangganResource;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
 class ProfilController extends Controller
@@ -53,6 +55,36 @@ class ProfilController extends Controller
         return response()->json([
             'message' => 'Profil berhasil diperbarui.',
             'data'    => new PelangganResource($pelanggan->fresh()),
+        ]);
+    }
+
+    // PUT /api/profil/kata-sandi
+    //
+    // Ubah kata sandi pelanggan.
+    // - Wajib kata_sandi_lama, kata_sandi_baru (min 8 + confirmed)
+    // - Kata sandi lama harus cocok dengan yang tersimpan
+    // - Setelah berhasil, cabut semua token lain (opsional)
+    public function updateKataSandi(UpdateKataSandiRequest $request)
+    {
+        $pelanggan = $request->user();
+
+        // Verifikasi kata sandi lama
+        if (!Hash::check($request->kata_sandi_lama, $pelanggan->kata_sandi)) {
+            return response()->json([
+                'message' => 'Kata sandi lama tidak sesuai.',
+            ], 422);
+        }
+
+        // Update kata sandi
+        $pelanggan->update([
+            'kata_sandi' => Hash::make($request->kata_sandi_baru),
+        ]);
+
+        // Cabut semua token lain (kecuali yang sedang dipakai)
+        $pelanggan->tokens()->delete();
+
+        return response()->json([
+            'message' => 'Kata sandi berhasil diubah. Silakan login kembali.',
         ]);
     }
 }

@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\Pelanggan;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
 class ProfilTest extends TestCase
@@ -141,6 +142,60 @@ class ProfilTest extends TestCase
     {
         $this->getJson('/api/profil')->assertUnauthorized();
         $this->putJson('/api/profil', ['nama_lengkap' => 'Baru'])->assertUnauthorized();
+        $this->putJson('/api/profil/kata-sandi', ['kata_sandi_lama' => 'x', 'kata_sandi_baru' => 'y'])->assertUnauthorized();
+    }
+
+    public function test_ubah_kata_sandi_berhasil(): void
+    {
+        $pelanggan = Pelanggan::create([
+            'nama_lengkap'      => 'Budi Santoso',
+            'email'             => 'budi@example.com',
+            'nomor_telepon'     => '081200000001',
+            'alamat'            => 'Jl. Uji No. 1',
+            'kata_sandi'        => 'password123',
+            'status_verifikasi' => 'Disetujui',
+        ]);
+
+        $token = $pelanggan->createToken('lama')->plainTextToken;
+
+        $this->withHeader('Authorization', 'Bearer '.$token)
+            ->putJson('/api/profil/kata-sandi', [
+                'kata_sandi_lama'   => 'password123',
+                'kata_sandi_baru'     => 'passwordbaru',
+                'kata_sandi_baru_confirmation' => 'passwordbaru',
+            ])
+            ->assertOk()
+            ->assertJsonPath('message', 'Kata sandi berhasil diubah. Silakan login kembali.');
+
+        // Token lama sudah dihapus
+        $this->assertFalse($pelanggan->tokens()->exists());
+
+        // Kata sandi baru bisa dipakai login
+        $pelanggan->update(['kata_sandi' => Hash::make('passwordbaru')]);
+        $this->assertTrue(Hash::check('passwordbaru', $pelanggan->fresh()->kata_sandi));
+    }
+
+    public function test_kata_sandi_lama_salah_422(): void
+    {
+        $pelanggan = Pelanggan::create([
+            'nama_lengkap'      => 'Budi Santoso',
+            'email'             => 'budi@example.com',
+            'nomor_telepon'     => '081200000001',
+            'alamat'            => 'Jl. Uji No. 1',
+            'kata_sandi'        => 'password123',
+            'status_verifikasi' => 'Disetujui',
+        ]);
+
+        $token = $pelanggan->createToken('tes')->plainTextToken;
+
+        $this->withHeader('Authorization', 'Bearer '.$token)
+            ->putJson('/api/profil/kata-sandi', [
+                'kata_sandi_lama'   => 'salah',
+                'kata_sandi_baru'   => 'passwordbaru',
+                'kata_sandi_baru_confirmation' => 'passwordbaru',
+            ])
+            ->assertStatus(422)
+            ->assertJsonPath('message', 'Kata sandi lama tidak sesuai.');
     }
 
     private function buatPelanggan(string $status): Pelanggan

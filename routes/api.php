@@ -62,6 +62,7 @@ Route::middleware('auth:pelanggan')->group(function () {
     // Profil pelanggan (lihat & update).
     Route::get('/profil', [ProfilController::class, 'show']);
     Route::put('/profil', [ProfilController::class, 'update']);
+    Route::put('/profil/kata-sandi', [ProfilController::class, 'updateKataSandi']);
 
     // Detail permintaan: pemilik saja (dicek Policy).
     Route::get('/permintaan/{id}', [PermintaanController::class, 'show'])->whereNumber('id');
