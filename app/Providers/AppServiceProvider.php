@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Observers\UlasanObserver;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 use App\Models\PermintaanService;
@@ -30,10 +31,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // Policies
         Gate::policy(PermintaanService::class, PermintaanPolicy::class);
         Gate::policy(PenawaranMitra::class, PenawaranPolicy::class);
         Gate::policy(PesananAktif::class, PesananPolicy::class);
         Gate::policy(Ulasan::class, UlasanPolicy::class);
         Gate::policy(Notifikasi::class, NotifikasiPolicy::class);
+
+        // Observers
+        Ulasan::observe(UlasanObserver::class);
     }
 }
