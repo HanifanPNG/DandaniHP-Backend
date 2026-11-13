@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\Auth\PelangganAuthController;
 use App\Http\Controllers\Api\Auth\MitraAuthController;
 use App\Http\Controllers\Api\Auth\AdminAuthController;
 use App\Http\Controllers\Api\Admin\VerifikasiController;
+use App\Http\Controllers\Api\Pelanggan\PermintaanController;
 use App\Http\Controllers\Api\Mitra\MitraDiscoveryController;
 
 
@@ -47,4 +48,9 @@ Route::middleware('auth:pelanggan')->group(function () {
     Route::get('/mitra', [MitraDiscoveryController::class, 'index']);
     Route::get('/mitra/{id}', [MitraDiscoveryController::class, 'show'])->whereNumber('id');
     Route::get('/mitra/{id}/ulasan', [MitraDiscoveryController::class, 'ulasan'])->whereNumber('id');
+});
+
+// Aksi pelanggan yang butuh akun terverifikasi (BR-01).
+Route::middleware(['auth:pelanggan', 'verified.pelanggan'])->group(function () {
+    Route::post('/permintaan', [PermintaanController::class, 'store']);
 });
