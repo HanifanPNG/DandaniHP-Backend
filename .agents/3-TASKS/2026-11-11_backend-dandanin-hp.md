@@ -526,20 +526,20 @@
 ### T-30 — Detail pesanan + timeline
 - **Modul:** M5
 - **Prioritas:** High
-- **Status:** Todo
+- **Status:** Done
 - **Dependensi:** T-29, T-27
 - **Estimasi:** 3 jam
 - **File:** `app/Http/Controllers/Api/Pelanggan/PesananController.php`, `PesananResource.php`, `routes/api.php`
 
 **Endpoint:** `GET /api/pesanan/{id}`
 
-- [ ] Hanya pemilik atau mitra terkait (Policy)
-- [ ] `status_kanonik` + label
-- [ ] Timeline dari `riwayat_status_pesanan` (urut waktu, termasuk aktor & catatan)
-- [ ] Data HP, kerusakan, mitra + kontak
-- [ ] Harga disetujui dari penawaran, `estimasi_selesai` = `waktu_dibuat` + `estimasi_hari`
-- [ ] Info pembayaran tunai: jumlah, status, waktu konfirmasi (tanpa tombol konfirmasi)
-- [ ] Eager load semua relasi, tanpa N+1
+- [x] Hanya pemilik atau mitra terkait (Policy)
+- [x] `status_kanonik` + label
+- [x] Timeline dari `riwayat_status_pesanan` (urut waktu, termasuk aktor & catatan)
+- [x] Data HP, kerusakan, mitra + kontak
+- [x] Harga disetujui dari penawaran, `estimasi_selesai` = `waktu_dibuat` + `estimasi_hari`
+- [x] Info pembayaran tunai: jumlah, status, waktu konfirmasi (tanpa tombol konfirmasi)
+- [x] Eager load semua relasi, tanpa N+1
 
 ### T-31 — Daftar pesanan aktif
 - **Modul:** M5

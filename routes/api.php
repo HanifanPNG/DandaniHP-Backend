@@ -7,6 +7,8 @@ use App\Http\Controllers\Api\Auth\AdminAuthController;
 use App\Http\Controllers\Api\Admin\VerifikasiController;
 use App\Http\Controllers\Api\Pelanggan\PermintaanController;
 use App\Http\Controllers\Api\Pelanggan\PenawaranController;
+use App\Http\Controllers\Api\Pelanggan\PesananController;
+use App\Http\Controllers\Api\Pelanggan\RiwayatController;
 use App\Http\Controllers\Api\Mitra\MitraDiscoveryController;
 
 
@@ -68,6 +70,9 @@ Route::middleware('auth:pelanggan')->group(function () {
     // Menolak penawaran -> tidak membuat pesanan (BR-05).
     Route::post('/penawaran/{id}/tolak', [PenawaranController::class, 'tolak'])
         ->whereNumber('id');
+
+    // Detail pesanan aktif.
+    Route::get('/pesanan/{id}', [PesananController::class, 'show'])->whereNumber('id');
 });
 
 // Aksi pelanggan yang butuh akun terverifikasi (BR-01).
