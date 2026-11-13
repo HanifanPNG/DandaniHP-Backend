@@ -492,19 +492,19 @@
 ### T-28 — Tolak penawaran
 - **Modul:** M4
 - **Prioritas:** High
-- **Status:** Todo
+- **Status:** Done
 - **Dependensi:** T-27
 - **Estimasi:** 2 jam
 - **File:** `PenawaranService.php`, controller, request, `routes/api.php`
 
 **Endpoint:** `POST /api/penawaran/{id}/tolak`
 
-- [ ] Hanya pemilik, hanya penawaran `Menunggu Keputusan`
-- [ ] `alasan_penolakan` opsional (maks 500 karakter)
-- [ ] Status → `Ditolak Pelanggan`
-- [ ] Jika semua penawaran ditolak → status kanonik permintaan menjadi `rejected`
-- [ ] BR-05: tidak ada pesanan yang dibuat
-- [ ] Test: tolak satu dari dua → masih `waiting_customer_approval`
+- [x] Hanya pemilik, hanya penawaran `Menunggu Keputusan`
+- [x] `alasan_penolakan` opsional (maks 500 karakter)
+- [x] Status → `Ditolak Pelanggan`
+- [x] Jika semua penawaran ditolak → status kanonik permintaan menjadi `rejected`
+- [x] BR-05: tidak ada pesanan yang dibuat
+- [x] Test: tolak satu dari dua → masih `waiting_customer_approval`
 
 ---
 

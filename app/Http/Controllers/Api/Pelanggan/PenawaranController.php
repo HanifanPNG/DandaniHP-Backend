@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Pelanggan;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Pelanggan\TolakPenawaranRequest;
 use App\Http\Resources\PenawaranResource;
 use App\Http\Resources\PesananResource;
 use App\Models\MitraService;
@@ -66,5 +67,29 @@ class PenawaranController extends Controller
             'message' => 'Penawaran disetujui. Pesanan masuk antrean mitra.',
             'data'    => (new PesananResource($pesanan))->resolve(),
         ], 201);
+    }
+
+    // POST /api/penawaran/{id}/tolak
+    //
+    // Menolak penawaran tidak membuat pesanan (BR-05).
+    // Kalau semua penawaran ditolak, permintaan dianggap gugur
+    // dan status kanoniknya menjadi rejected.
+    public function tolak(TolakPenawaranRequest $request, int $id, PenawaranService $service)
+    {
+        $penawaran = PenawaranMitra::findOrFail($id);
+
+        // Hanya pemilik permintaan induk yang boleh menolak.
+        $this->authorize('update', $penawaran);
+
+        $penawaran = $service->tolak(
+            $penawaran,
+            // Null kalau pelanggan tidak mengisi alasan.
+            $request->validated('alasan_penolakan')
+        );
+
+        return response()->json([
+            'message' => 'Penawaran berhasil ditolak.',
+            'data'    => (new PenawaranResource($penawaran))->resolve(),
+        ]);
     }
 }

@@ -2,7 +2,7 @@
 
 ## Status
 
-In Progress (25 step selesai)
+In Progress (28 step selesai)
 
 ## Tujuan Project
 
@@ -42,7 +42,10 @@ memakai Laravel Sanctum, lalu membatasi akses dengan middleware dan policy.
 - Upload lampiran permintaan (maks 4 gambar, 2 MB, disk `public`, URL publik)
 - `GET /api/permintaan/{id}` (detail + lampiran + ringkasan penawaran + `status_kanonik`)
 - `POST /api/permintaan/{id}/batalkan` (BR-06: ditolak bila sudah ada pesanan)
-- Unit test generator/status kanonik + feature test permintaan (31 test lulus)
+- `GET /api/permintaan/{id}/penawaran` (sort harga/rating, sembunyikan `Kedaluwarsa`)
+- `POST /api/penawaran/{id}/setujui` (transaksi: pemenang, kedaluwarsa, pesanan, riwayat, notifikasi)
+- `POST /api/penawaran/{id}/tolak` (BR-05: tanpa pesanan; semua ditolak → `rejected`)
+- Unit test generator/status kanonik + feature test permintaan & penawaran (50 test lulus)
 
 ## Konsep
 
@@ -66,6 +69,8 @@ memakai Laravel Sanctum, lalu membatasi akses dengan middleware dan policy.
 - Form Request untuk validasi terpisah dari controller
 - Service class (`KodePesananGenerator`, `LampiranService`) + transaksi database
 - Helper status kanonik (`StatusPesanan`) + PHPUnit data provider
+- Transaksi `DB::transaction` + `lockForUpdate` (setujui penawaran)
+- Service class memusatkan transisi status (state machine)
 - Feature/Unit test dengan `RefreshDatabase`
 
 ### Needs Review

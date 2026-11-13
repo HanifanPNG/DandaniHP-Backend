@@ -64,6 +64,10 @@ Route::middleware('auth:pelanggan')->group(function () {
     // Menyetujui penawaran -> membuat pesanan aktif (BR-04).
     Route::post('/penawaran/{id}/setujui', [PenawaranController::class, 'setujui'])
         ->whereNumber('id');
+
+    // Menolak penawaran -> tidak membuat pesanan (BR-05).
+    Route::post('/penawaran/{id}/tolak', [PenawaranController::class, 'tolak'])
+        ->whereNumber('id');
 });
 
 // Aksi pelanggan yang butuh akun terverifikasi (BR-01).

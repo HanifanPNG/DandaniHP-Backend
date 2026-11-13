@@ -113,4 +113,32 @@ class PenawaranService
             return $pesanan;
         });
     }
+
+    // Menolak satu penawaran atas nama pelanggan.
+    //
+    // BR-05: penolakan tidak pernah membuat pesanan. Kalau semua
+    // penawaran ditolak, status kanonik permintaan otomatis menjadi
+    // rejected saat dibaca (lihat StatusPesanan::kanonik).
+    public function tolak(PenawaranMitra $penawaran, ?string $alasan = null): PenawaranMitra
+    {
+        return DB::transaction(function () use ($penawaran, $alasan) {
+            $penawaran = PenawaranMitra::whereKey($penawaran->id_penawaran)
+                ->lockForUpdate()
+                ->firstOrFail();
+
+            // Hanya penawaran yang masih menunggu yang bisa ditolak.
+            if ($penawaran->status_penawaran !== StatusPesanan::PENAWARAN_MENUNGGU) {
+                throw ValidationException::withMessages([
+                    'status_penawaran' => 'Penawaran ini sudah tidak bisa ditolak.',
+                ]);
+            }
+
+            $penawaran->update([
+                'status_penawaran'  => StatusPesanan::PENAWARAN_DITOLAK,
+                'alasan_penolakan'  => $alasan,
+            ]);
+
+            return $penawaran->load('mitra');
+        });
+    }
 }
