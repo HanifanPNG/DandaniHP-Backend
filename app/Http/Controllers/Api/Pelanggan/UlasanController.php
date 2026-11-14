@@ -8,6 +8,7 @@ use App\Http\Resources\UlasanDetailResource;
 use App\Models\PesananAktif;
 use App\Models\Ulasan;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class UlasanController extends Controller
 {
@@ -38,16 +39,22 @@ class UlasanController extends Controller
         }
 
         $ulasan = DB::transaction(function () use ($request, $pesanan) {
-            $ulasan = Ulasan::create([
-                ...$request->validated(),
+            $data = $request->validated();
+
+            // Upload foto hasil servis jika ada.
+            if (isset($data['foto_ulasan'])) {
+                $data['foto_ulasan'] = $request->file('foto_ulasan')
+                    ->store('foto-ulasan', 'public');
+            }
+
+            return Ulasan::create([
+                ...$data,
 
                 'id_pesanan'  => $pesanan->id_pesanan,
                 'id_pelanggan'=> $pesanan->id_pelanggan,
                 'id_mitra'    => $pesanan->id_mitra,
                 'waktu_ulasan'=> now(),
             ]);
-
-            return $ulasan;
         });
 
         // Rekalkulasi rating mitra (T-40) - observer handle otomatis.

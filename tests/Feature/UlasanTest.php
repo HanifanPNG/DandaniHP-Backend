@@ -11,6 +11,7 @@ use App\Models\PembayaranTunai;
 use App\Models\Ulasan;
 use App\Support\StatusPesanan;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
 use Tests\TestCase;
 
 class UlasanTest extends TestCase
@@ -44,6 +45,7 @@ class UlasanTest extends TestCase
             ])
             ->assertCreated()
             ->assertJsonPath('data.rating_bintang', 5)
+            ->assertJsonPath('data.label_rating', 'Sempurna')
             ->assertJsonPath('data.komentar_ulasan', 'Service sangat memuaskan, cepat!')
             ->assertJsonPath('data.mitra.nama_usaha', 'Mitra Uji');
 
@@ -230,6 +232,49 @@ class UlasanTest extends TestCase
         // Rating harusnya 0 (tidak ada ulasan).
         $mitra->refresh();
         $this->assertEquals(0.0, (float) $mitra->rating_rata_rata);
+    }
+
+    public function test_ulasan_dengan_foto(): void
+    {
+        $pelanggan = $this->buatPelanggan('Disetujui');
+        $token = $pelanggan->createToken('tes')->plainTextToken;
+
+        $mitra = $this->buatMitra('Disetujui');
+        $permintaan = $this->buatPermintaan($pelanggan);
+        $penawaran = $this->buatPenawaran($permintaan, $mitra);
+
+        $pesanan = PesananAktif::create([
+            'id_penawaran'      => $penawaran->id_penawaran,
+            'id_permintaan'     => $permintaan->id_permintaan,
+            'id_pelanggan'      => $pelanggan->id_pelanggan,
+            'id_mitra'          => $mitra->id_mitra,
+            'status_pengerjaan' => StatusPesanan::PESANAN_SELESAI,
+            'waktu_dibuat'      => now(),
+            'waktu_update_terakhir' => now(),
+        ]);
+
+        $this->withHeader('Authorization', 'Bearer '.$token)
+            ->postJson('/api/pesanan/'.$pesanan->id_pesanan.'/ulasan', [
+                'rating_bintang'  => 4,
+                'komentar_ulasan' => 'Hasil rapi, tapi agak lama.',
+                'foto_ulasan'     => UploadedFile::fake()->image('hasil.jpg', 400, 400),
+            ])
+            ->assertCreated()
+            ->assertJsonPath('data.rating_bintang', 4)
+            ->assertJsonPath('data.label_rating', 'Sangat Baik')
+            ->assertJsonPath('data.warna_rating', '#2563EB');
+
+        // Foto tersimpan di storage.
+        $this->assertNotNull(Ulasan::first()->foto_ulasan);
+    }
+
+    public function test_label_rating_sesuai_bintang(): void
+    {
+        $this->assertEquals('Buruk', \App\Support\LabelRating::label(1));
+        $this->assertEquals('Cukup', \App\Support\LabelRating::label(2));
+        $this->assertEquals('Baik', \App\Support\LabelRating::label(3));
+        $this->assertEquals('Sangat Baik', \App\Support\LabelRating::label(4));
+        $this->assertEquals('Sempurna', \App\Support\LabelRating::label(5));
     }
 
     private function buatPelanggan(string $status): Pelanggan

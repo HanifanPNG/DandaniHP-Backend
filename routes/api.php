@@ -75,6 +75,9 @@ Route::middleware('auth:pelanggan')->group(function () {
     Route::get('/permintaan/{id}/penawaran', [PenawaranController::class, 'index'])
         ->whereNumber('id');
 
+    // Penawaran baru yang menunggu keputusan pelanggan (widget beranda).
+    Route::get('/penawaran/baru', [PenawaranController::class, 'baru']);
+
     // Menyetujui penawaran -> membuat pesanan aktif (BR-04).
     Route::post('/penawaran/{id}/setujui', [PenawaranController::class, 'setujui'])
         ->whereNumber('id');

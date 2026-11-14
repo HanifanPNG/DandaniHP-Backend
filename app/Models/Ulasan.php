@@ -12,7 +12,7 @@ class Ulasan extends Model
 
     protected $fillable = [
         'id_pesanan', 'id_pelanggan', 'id_mitra',
-        'rating_bintang', 'komentar_ulasan', 'waktu_ulasan',
+        'rating_bintang', 'komentar_ulasan', 'foto_ulasan', 'waktu_ulasan',
     ];
 
     protected function casts(): array
