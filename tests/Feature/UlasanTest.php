@@ -198,6 +198,10 @@ class UlasanTest extends TestCase
             ->postJson('/api/pesanan/'.$pesanan1->id_pesanan.'/ulasan', ['rating_bintang' => 5])
             ->assertCreated();
 
+        // Guard sanctum menyimpan user per instance; reset agar request
+        // berikutnya memakai token pelanggan 2, bukan pelanggan 1.
+        $this->app['auth']->forgetGuards();
+
         // Pelanggan 2 beri rating 4.
         $this->withHeader('Authorization', 'Bearer '.$token2)
             ->postJson('/api/pesanan/'.$pesanan2->id_pesanan.'/ulasan', ['rating_bintang' => 4])
@@ -213,9 +217,22 @@ class UlasanTest extends TestCase
         $pelanggan = $this->buatPelanggan('Disetujui');
         $mitra = $this->buatMitra('Disetujui');
 
+        // Ulasan butuh pesanan nyata karena ada foreign key.
+        $permintaan = $this->buatPermintaan($pelanggan);
+        $penawaran = $this->buatPenawaran($permintaan, $mitra);
+        $pesanan = PesananAktif::create([
+            'id_penawaran'          => $penawaran->id_penawaran,
+            'id_permintaan'         => $permintaan->id_permintaan,
+            'id_pelanggan'          => $pelanggan->id_pelanggan,
+            'id_mitra'              => $mitra->id_mitra,
+            'status_pengerjaan'     => StatusPesanan::PESANAN_SELESAI,
+            'waktu_dibuat'          => now(),
+            'waktu_update_terakhir' => now(),
+        ]);
+
         // Buat ulasan secara langsung (lewat model bukan API).
         Ulasan::create([
-            'id_pesanan' => 1,
+            'id_pesanan' => $pesanan->id_pesanan,
             'id_pelanggan' => $pelanggan->id_pelanggan,
             'id_mitra' => $mitra->id_mitra,
             'rating_bintang' => 5,
@@ -306,7 +323,7 @@ class UlasanTest extends TestCase
     private function buatPermintaan(Pelanggan $pelanggan): PermintaanService
     {
         return PermintaanService::create([
-            'kode_pesanan'        => 'SRV-2026-00001',
+            'kode_pesanan'        => 'SRV-2026-'.random_int(100000, 999999),
             'id_pelanggan'        => $pelanggan->id_pelanggan,
             'merek_hp'            => 'Samsung',
             'model_hp'            => 'A54',
