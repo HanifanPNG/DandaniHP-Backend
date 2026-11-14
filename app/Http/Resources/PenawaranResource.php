@@ -14,6 +14,14 @@ class PenawaranResource extends JsonResource
         return [
             'id_penawaran' => $this->id_penawaran,
 
+            // Info permintaan terkait (dipakai di widget "Tawaran Baru").
+            'permintaan' => $this->whenLoaded('permintaan', fn () => [
+                'id_permintaan' => $this->permintaan?->id_permintaan,
+                'kode_pesanan'  => $this->permintaan?->kode_pesanan,
+                'merek_hp'      => $this->permintaan?->merek_hp,
+                'model_hp'      => $this->permintaan?->model_hp,
+            ]),
+
             // Ringkasan mitra: cukup data yang ditampilkan di kartu penawaran.
             'mitra' => [
                 'id_mitra'   => $this->mitra?->id_mitra,

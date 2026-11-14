@@ -5,7 +5,7 @@
 | Sumber acuan | `.agents/2-TECH-SPEC.md` v1.0 |
 | Tanggal dibuat | 2026-11-11 |
 | Status | Belum dieksekusi |
-| Total task | 47 task dalam 11 modul |
+| Total task | 50 task dalam 12 modul |
 | Aturan | Kerjakan berurutan sesuai dependensi. Jangan menambah fitur di luar task. Satu task selesai → ubah `Status` jadi `Done`. |
 
 ## Ringkasan Modul
@@ -23,6 +23,7 @@
 | M8 | T-41 … T-42 | Notifikasi |
 | M9 | T-43 … T-44 | Profil pelanggan |
 | M10 | T-45 … T-47 | Factory, feature test, dokumentasi |
+| M11 | T-48 … T-50 | Tawaran baru, foto ulasan, label rating |
 
 > ⚠️ **Peringatan D4:** T-01 mengedit migration yang sudah jalan dan berakhir dengan `migrate:fresh --seed`. Seluruh data di database `Dandani-HP` akan hilang. Pastikan tidak ada data yang perlu disimpan.
 
@@ -783,46 +784,88 @@
 ### T-45 — Factory semua model
 - **Modul:** M10
 - **Prioritas:** High
-- **Status:** Todo
+- **Status:** Done
 - **Dependensi:** T-07
 - **Estimasi:** 3 jam
 - **File:** `database/factories/*.php`
 
-- [ ] Factory: Pelanggan, MitraService, PermintaanService, PenawaranMitra, PesananAktif, PembayaranTunai, Ulasan, Notifikasi, RiwayatStatusPesanan, LampiranPermintaan
-- [ ] State helper: `mitraTerverifikasi()`, `pelangganTerverifikasi()`, `pesananSelesai()`
-- [ ] Factory tidak melanggar unique constraint saat dipakai berulang
+- [x] Factory: Pelanggan, MitraService, PermintaanService, PenawaranMitra, PesananAktif, PembayaranTunai, Ulasan, Notifikasi, RiwayatStatusPesanan, LampiranPermintaan
+- [x] State helper: `mitraTerverifikasi()`, `pelangganTerverifikasi()`, `pesananSelesai()`
+- [x] Factory tidak melanggar unique constraint saat dipakai berulang
 
 ### T-46 — Feature test aturan bisnis
 - **Modul:** M10
 - **Prioritas:** High
-- **Status:** Todo
+- **Status:** Done
 - **Dependensi:** T-45, T-44
 - **Estimasi:** 5 jam
 - **File:** `tests/Feature/*.php`
 
-- [ ] BR-01: pelanggan `Menunggu` gagal membuat permintaan
-- [ ] BR-04: pesanan hanya lahir dari penawaran disetujui
-- [ ] BR-05: penawaran ditolak tidak membuat pesanan
-- [ ] BR-06: pembatalan setelah pesanan ada → 422
-- [ ] BR-07/08: konfirmasi pembayaran hanya endpoint mitra + tidak ada input metode
-- [ ] BR-09: ulasan sebelum `Pesanan Selesai` → 422
-- [ ] BR-10: ulasan ganda → 422
-- [ ] D1: approve penawaran → penawaran lain `Kedaluwarsa`, hanya 1 pesanan
-- [ ] Otorisasi: pelanggan A tidak bisa membuka pesanan pelanggan B
-- [ ] `php artisan test` hijau seluruhnya dengan SQLite `:memory:`
+- [x] BR-01: pelanggan `Menunggu` gagal membuat permintaan
+- [x] BR-04: pesanan hanya lahir dari penawaran disetujui
+- [x] BR-05: penawaran ditolak tidak membuat pesanan
+- [x] BR-06: pembatalan setelah pesanan ada → 422
+- [x] BR-07/08: konfirmasi pembayaran hanya endpoint mitra + tidak ada input metode
+- [x] BR-09: ulasan sebelum `Pesanan Selesai` → 422
+- [x] BR-10: ulasan ganda → 422
+- [x] D1: approve penawaran → penawaran lain `Kedaluwarsa`, hanya 1 pesanan
+- [x] Otorisasi: pelanggan A tidak bisa membuka pesanan pelanggan B
+- [x] `php artisan test` hijau seluruhnya dengan SQLite `:memory:`
 
 ### T-47 — Dokumentasi endpoint & deviasi PRD
 - **Modul:** M10
 - **Prioritas:** Low
-- **Status:** Todo
+- **Status:** Done
 - **Dependensi:** T-46
 - **Estimasi:** 2 jam
 - **File:** `.agents/2-TECH-SPEC.md` (bagian deviasi), `README.md`
 
-- [ ] Daftar endpoint + contoh request/response ringkas di `README.md`
-- [ ] Catat 6 deviasi PRD dari tech spec bagian 7
-- [ ] Catat cara menjalankan: `migrate:fresh --seed`, akun demo, base URL
-- [ ] Jangan menambah dokumentasi di luar konteks backend ini
+- [x] Daftar endpoint + contoh request/response ringkas di `README.md`
+- [x] Catat 6 deviasi PRD dari tech spec bagian 7
+- [x] Catat cara menjalankan: `migrate:fresh --seed`, akun demo, base URL
+- [x] Jangan menambah dokumentasi di luar konteks backend ini
+
+## M11 — Tawaran Baru, Foto Ulasan, Label Rating
+
+### T-48 — Endpoint penawaran masuk (`GET /api/penawaran/baru`)
+- **Modul:** M11
+- **Prioritas:** High
+- **Status:** Done
+- **Dependensi:** T-28
+- **Estimasi:** 2 jam
+- **File:** `app/Http/Controllers/Api/Pelanggan/PenawaranController.php`, `app/Http/Resources/PenawaranResource.php`, `routes/api.php`
+
+- [x] Hanya penawaran `Menunggu Keputusan` milik pelanggan login
+- [x] Hanya untuk permintaan yang masih `Mencari Penawaran`
+- [x] `PenawaranResource` menyertakan ringkasan `permintaan` (kode, merek, model)
+- [x] Urut dari penawaran terbaru
+- [x] Test: muncul untuk pemilik, tidak muncul setelah disetujui, tidak muncul untuk pelanggan lain, `401` tanpa token
+
+### T-49 — Upload foto pada ulasan
+- **Modul:** M11
+- **Prioritas:** Medium
+- **Status:** Done
+- **Dependensi:** T-39
+- **Estimasi:** 2 jam
+- **File:** `database/migrations/*_add_foto_ulasan_to_ulasan_table.php`, `app/Models/Ulasan.php`, `app/Http/Requests/Pelanggan/StoreUlasanRequest.php`, `app/Http/Controllers/Api/Pelanggan/UlasanController.php`, `app/Http/Resources/UlasanDetailResource.php`
+
+- [x] Kolom `foto_ulasan` nullable di tabel `ulasan`
+- [x] Validasi `image` maks 2 MB, disimpan di disk `public` folder `foto-ulasan`
+- [x] `foto_ulasan` muncul di `UlasanDetailResource`
+- [x] Test: ulasan dengan foto tersimpan dan path tidak null
+
+### T-50 — Label dinamis rating
+- **Modul:** M11
+- **Prioritas:** Medium
+- **Status:** Done
+- **Dependensi:** T-39
+- **Estimasi:** 1 jam
+- **File:** `app/Support/LabelRating.php`, `app/Http/Resources/UlasanDetailResource.php`
+
+- [x] Peta bintang → label: Buruk, Cukup, Baik, Sangat Baik, Sempurna
+- [x] Peta bintang → warna badge
+- [x] Fallback aman untuk nilai di luar 1–5
+- [x] Test: kelima label sesuai bintang
 
 ---
 

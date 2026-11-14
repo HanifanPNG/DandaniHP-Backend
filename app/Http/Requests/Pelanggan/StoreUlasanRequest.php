@@ -19,6 +19,7 @@ class StoreUlasanRequest extends FormRequest
         return [
             'rating_bintang'   => ['required', 'integer', 'min:1', 'max:5'],
             'komentar_ulasan'  => ['nullable', 'string', 'max:1000'],
+            'foto_ulasan'      => ['nullable', 'image', 'max:2048'], // 2MB maks
 
             'id_pelanggan'     => ['prohibited'],
             'id_mitra'         => ['prohibited'],

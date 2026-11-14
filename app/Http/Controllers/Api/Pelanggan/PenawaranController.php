@@ -15,6 +15,26 @@ use Illuminate\Http\Request;
 
 class PenawaranController extends Controller
 {
+    // GET /api/penawaran/baru
+    //
+    // Menampilkan penawaran yang masuk dan menunggu keputusan pelanggan.
+    // Dipakai di widget "Tawaran Baru" pada beranda.
+    // Hanya penawaran berstatus Menunggu Keputusan milik pelanggan login.
+    public function baru(Request $request)
+    {
+        $pelanggan = $request->user();
+
+        $penawaran = PenawaranMitra::with(['mitra', 'permintaan'])
+            ->where('status_penawaran', StatusPesanan::PENAWARAN_MENUNGGU)
+            ->whereHas('permintaan', fn ($q) => $q
+                ->where('id_pelanggan', $pelanggan->id_pelanggan)
+                ->where('status_permintaan', StatusPesanan::PERMINTAAN_MENCARI_PENAWARAN))
+            ->orderByDesc('waktu_penawaran')
+            ->get();
+
+        return PenawaranResource::collection($penawaran);
+    }
+
     // GET /api/permintaan/{id}/penawaran
     //
     // Menampilkan semua penawaran yang masuk untuk satu permintaan.
